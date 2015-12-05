@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * Main frame for the Board Game. 
@@ -20,6 +21,12 @@ public class Game extends JFrame implements ActionListener {
 
 	private Random rand; //used to roll our dice
 	private GameBoardPanel gbp;
+
+	private JPanel bottom;
+
+	private JButton roll;
+
+	private JLabel turnLabel;
 
 /**
  * Constructor for the Game - creates the initial board and its squares; then creates the GameBoardPanel that
@@ -50,8 +57,14 @@ public class Game extends JFrame implements ActionListener {
 	 * @return
 	 */
 	private JPanel makeControl() {
-		//set up your bottom control panel here
-		return new JPanel(); //change - this code is here so the starter code will compile
+		bottom = new JPanel();
+		roll = new JButton("Roll");
+		roll.addActionListener(this);
+		bottom.setLayout(new BorderLayout());
+		bottom.add(roll, BorderLayout.WEST);
+		turnLabel = new JLabel("It's Celine's turn", SwingConstants.CENTER);
+		bottom.add(turnLabel, BorderLayout.CENTER);
+		return bottom; //change - this code is here so the starter code will compile
 		
 	}
 	
