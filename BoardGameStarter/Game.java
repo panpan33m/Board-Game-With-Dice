@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +28,8 @@ public class Game extends JFrame implements ActionListener {
 	private JButton roll;
 
 	private JLabel turnLabel;
+	
+	private JDialog dialog = null;
 
 /**
  * Constructor for the Game - creates the initial board and its squares; then creates the GameBoardPanel that
@@ -39,10 +42,28 @@ public class Game extends JFrame implements ActionListener {
 		this.setLayout(new BorderLayout());
 		board = new Board(new String[]{"Alice","Bob"});
 		//Add the squares to the board. Don't worry about order (except for start/end)
-		board.addSquare(new PlainSquare()); //you will need to change this
-		for (int i=0; i<4*Board.BOARDSIZE; ++i) {
+		board.addSquare(new ActionSquare("Start"));
+		int count = 2;
+		for (int i=0; i<3; ++i) {
+			board.addSquare(new ActionSquare("Roll Again"));
+			count++;
+		}
+		for (int i=0; i<5; ++i) {
+			board.addSquare(new ActionSquare("Go Back"));
+			count++;
+		}
+		for (int i=0; i<2; ++i) {
+			board.addSquare(new ActionSquare("Shuffle"));
+			count++;
+		}
+		for (int i=0, j=1; i<6; ++i, ++j) {
+			board.addSquare(new ActionSquare("Save Point"+j));
+			count++;
+		}
+		for (int i=0; i<4*(board.BOARDSIZE-1)+1-count; ++i) {
 			board.addSquare(new PlainSquare());
 		}
+		board.addSquare(new ActionSquare("Finish"));
 
 		//Shuffle our board so the order is random
 		board.shuffle();
@@ -62,7 +83,7 @@ public class Game extends JFrame implements ActionListener {
 		roll.addActionListener(this);
 		bottom.setLayout(new BorderLayout());
 		bottom.add(roll, BorderLayout.WEST);
-		turnLabel = new JLabel("It's Celine's turn", SwingConstants.CENTER);
+		turnLabel = new JLabel("It's *Celine*'s turn", SwingConstants.CENTER);
 		bottom.add(turnLabel, BorderLayout.CENTER);
 		return bottom; //change - this code is here so the starter code will compile
 		
@@ -79,6 +100,12 @@ public class Game extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().equals("Roll")){
+			rand = new Random();
+			int diceNumber = rand.nextInt(6)+1;
+			JOptionPane.showMessageDialog(this, "You rolled "+diceNumber);
+			board.doMove(diceNumber);
+		}
 		//take care of moving the player around and updating the board!
 		this.update(this.getGraphics());
 	}
