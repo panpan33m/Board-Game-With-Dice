@@ -1,13 +1,20 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * This class defines your game board
  * @author jburge
  *
  */
-public class Board {
+public class Board
+{
 
-	public static final int BOARDSIZE=9;
+	public static final int BOARDSIZE = 9;
+	public int TURN_INDEX = 0;
+	
+	private String[] playerNames;
+	private ArrayList<Integer> location = new ArrayList<Integer>();
+	private ArrayList<Square> savePoints = new ArrayList<Square>();
 
 	/**
 	 * An array list of all the squares on our board
@@ -16,33 +23,61 @@ public class Board {
 	/**
 	 * The people playing the game
 	 */
-	//TODO - define!
+	//public String player1 = playerNames[0];
+	//public String player2 = playerNames[1];
 	/**
 	 * The person whose turn it is
 	 */
-	//TODO: define!
+	public String turn()
+	{
+		String turn;
+		if(TURN_INDEX == 0)
+		{
+			TURN_INDEX = 1;
+			turn = playerNames[0];
+		}
+		else
+		{
+			TURN_INDEX = 0;
+			turn = playerNames[1];
+		}
+		return turn;
+	}
 
 	/**
 	 * Constructor for the board game
 	 * @param playerNames
 	 */
-	public Board(String[] playerNames) {
-	
+	public Board(String[] playerNames) 
+	{
+		this.playerNames = playerNames;
+		
 	}
 	
 	/** 
 	 * Randomly re-order the squares (except for the start and end, of course)
 	 */
-	public void shuffle() {
-
+	public void shuffle() 
+	{
+		Square temp;
+		int index;
+		Random rand = new Random();
+		for(int i = board.size()-2; i > 1; i--)
+		{
+			index = rand.nextInt(i+1);
+			temp = board.get(index);
+			board.set(index, board.get(i));
+			board.set(i, temp);
+		}
 	}
 	
 	/**
 	 * Move a player back to the last save point square they landed on or to 
 	 * the start
 	 */
-	public void goBack() {
-
+	public void goBack() 
+	{
+		
 	}
 	
 
@@ -65,7 +100,8 @@ public class Board {
 	 * Creates our game board
 	 * @return - a 2-D array of all the squares on the board
 	 */
-	public Square[][] createBoard() {
+	public Square[][] createBoard() 
+	{
 		Square[][] result = new Square[BOARDSIZE][BOARDSIZE];
 		for (int x=0; x<BOARDSIZE; ++x) {
 			for (int y=0; y<BOARDSIZE; ++y) {
@@ -83,15 +119,17 @@ public class Board {
 	 * Move the player to their new position based on the dice roll
 	 * @param value - the dice roll
 	 */
-	public void doMove(int value) {
+	public void doMove(int value) 
+	{
 
 	}
 
 	/**
 	 * Go to the next player's turn
 	 */
-	public void next() {
-
+	public void next() 
+	{
+		
 	}
 
 	/**
@@ -101,33 +139,41 @@ public class Board {
 	 * @param y - y-coordinate in the array
 	 * @return - the index of the square in our array list
 	 */
-	private int mapSquareToPosition(int x, int y) {
+	private int mapSquareToPosition(int x, int y) 
+	{
 		if ((x<0)||(y<0)||(x>=BOARDSIZE)||(y>=BOARDSIZE))
 			throw new IllegalArgumentException("(x,y) invalid");
 		//If y=0, we are looking at the bottom row of the grid. 
 		//The index in the array corresponds to the X coordinate.
-		if (y==0) {
+		if (y==0) 
+		{
 			return x;
 		}
 		//Lower vertical set of squares - at Max x-coordinate
-		else if (y<BOARDSIZE/2) {
-			if (x==BOARDSIZE-1) {
+		else if (y<BOARDSIZE/2) 
+		{
+			if (x==BOARDSIZE-1) 
+			{
 				return BOARDSIZE+y-1;
 			}
 			else return -1;
 		}
 		//The set that goes across the middle of the board
-		else if (y==BOARDSIZE/2) {
+		else if (y==BOARDSIZE/2) 
+		{
 			return (2*BOARDSIZE+(BOARDSIZE/2)-x-2);
 		}
 		//The squares going up the left side
-		else if (y<BOARDSIZE-1) {
-			if (x==0) {
+		else if (y<BOARDSIZE-1) 
+		{
+			if (x==0) 
+			{
 				return (2*BOARDSIZE+y-2);
 			}
 		}
 		//The squares along the top
-		else if (y==BOARDSIZE-1) {
+		else if (y==BOARDSIZE-1) 
+		{
 			return (3*BOARDSIZE)-3+x;
 		}
 		return -1;
@@ -140,7 +186,8 @@ public class Board {
 	 * run from Game.main. You can run this method to see how mapSquareToPosition works
 	 * @param args
 	 */
-	public static void main(String [] args) {
+	public static void main(String [] args) 
+	{
 		Board b = new Board(args);
 
 		for (int y=BOARDSIZE-1; y>=0; --y) {
@@ -152,3 +199,4 @@ public class Board {
 
 	}
 }
+
