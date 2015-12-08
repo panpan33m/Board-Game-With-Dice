@@ -12,7 +12,27 @@ public abstract class Square {
 
 	protected Board board;
 	
+	private ArrayList<String> players;
+	
 	public Square() {
+		players = new ArrayList<String>();
+	}
+	
+	public void addPlayer(String name){
+		players.add(name);
+		
+	}
+	
+	public String getPlayer(int n){
+		return players.get(n);
+	}
+	
+	public void removePlayer(int n){
+		players.remove(n);
+	}
+	
+	public int sizePlayer(){
+		return players.size();
 	}
 	
 	public void setBoard(Board b) {

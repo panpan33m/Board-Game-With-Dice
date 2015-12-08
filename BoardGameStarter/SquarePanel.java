@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class SquarePanel extends JPanel {
 	
 	private Square model;
 	private JPanel subPanel;
+	private JLabel name;
 	
 	public SquarePanel(Square s) {
 		super();
@@ -43,6 +45,12 @@ public class SquarePanel extends JPanel {
 	public void update() {
 		subPanel.removeAll();
 		//TODO: you will need to update all the player labels here so the
+		subPanel.setLayout(new FlowLayout());
+		for(int i=0; i<model.sizePlayer(); i++){
+			name = new JLabel(model.getPlayer(i));
+			subPanel.add(name);
+		}
+		
 		this.repaint();
 	}
 	
