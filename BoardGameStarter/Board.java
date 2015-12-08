@@ -62,7 +62,7 @@ public class Board
 		Square temp;
 		int index;
 		Random rand = new Random();
-		for(int i = board.size()-2; i > 1; i--)
+		for(int i = board.size()-2; i > 2; i--)
 		{
 			index = rand.nextInt(i+1);
 			temp = board.get(index);
