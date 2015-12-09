@@ -83,7 +83,7 @@ public class Game extends JFrame implements ActionListener {
 		roll.addActionListener(this);
 		bottom.setLayout(new BorderLayout());
 		bottom.add(roll, BorderLayout.WEST);
-		turnLabel = new JLabel("It's "+board.turn()+"'s turn", SwingConstants.CENTER);
+		turnLabel = new JLabel("It's " + board.turn() +"'s turn", SwingConstants.CENTER);
 		bottom.add(turnLabel, BorderLayout.CENTER);
 		return bottom; //change - this code is here so the starter code will compile
 
@@ -103,11 +103,13 @@ public class Game extends JFrame implements ActionListener {
 		if (e.getActionCommand().equals("Roll")){
 			rand = new Random();
 			int diceNumber = rand.nextInt(6)+1;
-			JOptionPane.showMessageDialog(this, "You rolled "+diceNumber);
+			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 			board.doMove(diceNumber);
+			gbp.update();
+			this.update(this.getGraphics());
 		}
 		//take care of moving the player around and updating the board!
-		this.update(this.getGraphics());
+		//this.update(this.getGraphics());
 	}
 
 }

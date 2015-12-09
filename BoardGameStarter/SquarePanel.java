@@ -46,7 +46,8 @@ public class SquarePanel extends JPanel {
 		subPanel.removeAll();
 		//TODO: you will need to update all the player labels here so the
 		subPanel.setLayout(new FlowLayout());
-		for(int i=0; i<model.sizePlayer(); i++){
+		for(int i=0; i<model.sizePlayer(); i++)
+		{
 			name = new JLabel(model.getPlayer(i));
 			subPanel.add(name);
 		}

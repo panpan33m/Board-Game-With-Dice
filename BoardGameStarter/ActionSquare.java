@@ -18,18 +18,20 @@ public class ActionSquare extends Square{
 		if(label.equals("Roll Again")){
 			JOptionPane.showMessageDialog(null, "It's your turn to roll again!");
 		}
-		if(label.equals("Go Back")){
+		else if(label.equals("Go Back")){
 			board.goBack();
 			board.next();
 		}
-		if(label.equals("Shuffle")){
+		else if(label.equals("Shuffle")){
 			board.shuffle();
 			board.next();
 		}
-		if(label.contains("Save Point")){
+		else if(label.contains("Save Point")){
 			String number = label.substring(label.length() - 1);
+			board.savePoint(this);
+			board.next();
 		}
-		if(label.equals("Finish")){
+		else if(label.equals("Finish")){
 			JOptionPane.showMessageDialog(null, board.turn()+" wins!");
 			System.exit(0);
 		}
