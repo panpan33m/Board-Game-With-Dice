@@ -78,7 +78,7 @@ public class Board
 	{
 		//Check to see if have any savePoints saved, then move to last savePoint
 		//If no savePoints, move to start
-		if(turn() == playerNames[0])
+		if(turn().equals(playerNames[0]))
 		{
 			int location = 0;
 			int player = 0;
@@ -112,7 +112,7 @@ public class Board
 				}
 			}
 		}
-		else if(turn() == playerNames[1])
+		else if(turn().equals(playerNames[1]))
 		{
 			int location = 0;
 			int player = 0;
@@ -194,7 +194,7 @@ public class Board
 	{
 		int location = 0;
 		int player = 0;
-		if(turn() == playerNames[0])
+		if(turn().equals(playerNames[0]))
 		{
 			for(int i = 0; i < board.size(); i++)
 			{
@@ -211,7 +211,6 @@ public class Board
 				}
 			}
 			
-			System.out.println((location+value) + " " + playerNames[0]);
 			board.get(location).removePlayer(player);
 			if((location+value) <= (board.size()-1))
 			{
@@ -224,7 +223,7 @@ public class Board
 				board.get(board.size()-1).doAction();
 			}
 		}
-		else if(turn() == playerNames[1])
+		else if(turn().equals(playerNames[1]))
 		{
 			for(int i = 0; i < board.size(); i++)
 			{
@@ -241,7 +240,6 @@ public class Board
 				}
 			}
 			
-			System.out.println((location+value) + " " + playerNames[1]);
 			board.get(location).removePlayer(player);
 			if((location+value) <= (board.size()-1))
 			{
@@ -269,7 +267,6 @@ public class Board
 		 {
 			 TURN_INDEX = 0;
 		 }
-		 System.out.println(TURN_INDEX);
 	 }
 
 	/**

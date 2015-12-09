@@ -105,6 +105,10 @@ public class Game extends JFrame implements ActionListener {
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 			board.doMove(diceNumber);
+			this.remove(gbp);
+			gbp = new GameBoardPanel(board);
+			this.add(gbp,BorderLayout.CENTER);
+			this.add(makeControl(),BorderLayout.SOUTH);
 			gbp.update();
 			this.update(this.getGraphics());
 		}

@@ -51,7 +51,7 @@ public class SquarePanel extends JPanel {
 			name = new JLabel(model.getPlayer(i));
 			subPanel.add(name);
 		}
-		
+		this.revalidate();
 		this.repaint();
 	}
 	

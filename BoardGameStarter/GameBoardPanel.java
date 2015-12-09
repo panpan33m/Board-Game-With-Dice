@@ -43,6 +43,7 @@ public class GameBoardPanel extends JPanel {
 		for (SquarePanel p: tiles) {
 			p.update();
 		}
+		validate();
 		repaint();
 	}
 	
