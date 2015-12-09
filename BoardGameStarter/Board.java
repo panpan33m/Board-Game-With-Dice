@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 /**
  * This class defines your game board
  * @author jburge
@@ -10,11 +12,10 @@ public class Board
 {
 
 	public static final int BOARDSIZE = 9;
-	public int TURN_INDEX = 0;
+	public static int TURN_INDEX = 0;
 
 	private String[] playerNames;
-	private ArrayList<Integer> location = new ArrayList<Integer>();
-	private ArrayList<Square> savePoints = new ArrayList<Square>();
+	//private ArrayList<Square> savePoints = new ArrayList<Square>();
 
 	/**
 	 * An array list of all the squares on our board
@@ -113,7 +114,30 @@ public class Board
 	 */
 	public void doMove(int value)
 	{
+		int location = 0;
+		if(turn() == playerNames[0])
+		{
+			//for(int i = 0; i < board.size(); i++)
+			//{
+				if(board.get(0).getPlayer(0).equals(playerNames[0]))
+				{
+					location = 0;
+				}
+			//}
+			
+			//location = board.indexOf(board.get(playerIndex));
+			System.out.println(location);
+			board.get(location).removePlayer(location);
+			board.get(location+value).addPlayer(playerNames[0]);
 
+		}
+		else if(turn() == playerNames[1])
+		{
+			location = board.indexOf(playerNames[1]);
+			board.get(location).removePlayer(location);
+			board.get(location+value).addPlayer(playerNames[1]);
+		}
+		
 	}
 
 	/**
