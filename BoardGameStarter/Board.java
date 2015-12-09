@@ -15,7 +15,8 @@ public class Board
 	public int TURN_INDEX = 0;
 
 	private String[] playerNames;
-	//private ArrayList<Square> savePoints = new ArrayList<Square>();
+	private ArrayList<Square> p1SavePoints = new ArrayList<Square>();
+	private ArrayList<Square> p2SavePoints = new ArrayList<Square>();
 
 	/**
 	 * An array list of all the squares on our board
@@ -60,6 +61,22 @@ public class Board
 			board.set(i, temp);
 		}
 	}
+	
+	/**
+	 * Keeps track of savePoints for player, to be used in goBack method
+	 */
+	public void savePoint(Square s)
+	{
+		if(turn() == playerNames[0])
+		{
+			p1SavePoints.add(s);
+		}
+		else if(turn() == playerNames[1])
+		{
+			p2SavePoints.add(s);
+		}
+	}
+	
 
 	/**
 	 * Move a player back to the last save point square they landed on or to
@@ -69,6 +86,75 @@ public class Board
 	{
 		//Check to see if have any savePoints saved, then move to last savePoint
 		//If no savePoints, move to start
+		if(turn() == playerNames[0])
+		{
+			int location = 0;
+			int player = 0;
+			for(int i = 0; i < board.size(); i++)
+			{
+				if(board.get(i).sizePlayer() > 0)
+				{
+					for(int j = 0; j < board.get(i).sizePlayer(); j++)
+					{
+						if(board.get(i).getPlayer(j).contains(playerNames[0]))
+						{
+							location = i;
+							player = j;
+						}
+					}
+				}
+			}
+			board.get(location).removePlayer(player);
+			if(p1SavePoints.isEmpty())
+			{
+				board.get(0).addPlayer(playerNames[0]);
+			}
+			else
+			{
+				for(int i = 0; i < board.size(); i++)
+				{
+					if(board.get(i).equals(p1SavePoints.get(p1SavePoints.size()-1)))
+					{
+						board.get(i).addPlayer(playerNames[0]);
+					}
+				}
+			}
+		}
+		else if(turn() == playerNames[1])
+		{
+			int location = 0;
+			int player = 0;
+			for(int i = 0; i < board.size(); i++)
+			{
+				if(board.get(i).sizePlayer() > 0)
+				{
+					for(int j = 0; j < board.get(i).sizePlayer(); j++)
+					{
+						if(board.get(i).getPlayer(j).contains(playerNames[1]))
+						{
+							location = i;
+							player = j;
+						}
+					}
+				}
+			}
+			board.get(location).removePlayer(player);
+			if(p2SavePoints.isEmpty())
+			{
+				board.get(0).addPlayer(playerNames[1]);
+			}
+			else
+			{
+				for(int i = 0; i < board.size(); i++)
+				{
+					if(board.get(i).equals(p2SavePoints.get(p2SavePoints.size()-1)))
+					{
+						board.get(i).addPlayer(playerNames[1]);
+					}
+				}
+			}
+			
+		}
 	}
 
 

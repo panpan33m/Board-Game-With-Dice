@@ -106,6 +106,7 @@ public class Game extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 			board.doMove(diceNumber);
 			gbp.update();
+			this.update(this.getGraphics());
 		}
 		//take care of moving the player around and updating the board!
 		//this.update(this.getGraphics());
