@@ -12,12 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- * Main frame for the Board Game. 
+ * Main frame for the Board Game.
  * @author jburge
  *
  */
 public class Game extends JFrame implements ActionListener {
-	
+
 	private Board board;
 
 	private Random rand; //used to roll our dice
@@ -28,12 +28,12 @@ public class Game extends JFrame implements ActionListener {
 	private JButton roll;
 
 	private JLabel turnLabel;
-	
+
 	private JDialog dialog = null;
 
 /**
  * Constructor for the Game - creates the initial board and its squares; then creates the GameBoardPanel that
- * will display them	
+ * will display them
  */
 	public Game() {
 		this.setSize(800,800);
@@ -72,7 +72,7 @@ public class Game extends JFrame implements ActionListener {
 		this.add(makeControl(),BorderLayout.SOUTH);
 		rand = new Random(); //used when rolling dice
 	}
-	
+
 	/**
 	 * Sets up the panel at the bottom that shows whose turn it is and lets the player roll the dice
 	 * @return
@@ -86,9 +86,9 @@ public class Game extends JFrame implements ActionListener {
 		turnLabel = new JLabel("It's *Celine*'s turn", SwingConstants.CENTER);
 		bottom.add(turnLabel, BorderLayout.CENTER);
 		return bottom; //change - this code is here so the starter code will compile
-		
+
 	}
-	
+
 	public static void main(String [] args) {
 		Game g = new Game();
 		g.setVisible(true);
@@ -97,7 +97,7 @@ public class Game extends JFrame implements ActionListener {
 	/**
 	 * This method will respond to the Roll button. You will need to write this code so your version
 	 * works like the one in the example.
-	 * 
+	 *
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Roll")){
