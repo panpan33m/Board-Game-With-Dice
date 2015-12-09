@@ -103,11 +103,12 @@ public class Game extends JFrame implements ActionListener {
 		if (e.getActionCommand().equals("Roll")){
 			rand = new Random();
 			int diceNumber = rand.nextInt(6)+1;
-			JOptionPane.showMessageDialog(this, "You rolled "+diceNumber);
+			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 			board.doMove(diceNumber);
+			gbp.update();
 		}
 		//take care of moving the player around and updating the board!
-		this.update(this.getGraphics());
+		//this.update(this.getGraphics());
 	}
 
 }

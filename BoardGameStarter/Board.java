@@ -12,7 +12,7 @@ public class Board
 {
 
 	public static final int BOARDSIZE = 9;
-	public static int TURN_INDEX = 0;
+	public int TURN_INDEX = 0;
 
 	private String[] playerNames;
 	//private ArrayList<Square> savePoints = new ArrayList<Square>();
@@ -29,10 +29,10 @@ public class Board
 	/**
 	 * The person whose turn it is
 	 */
-	 public String turn()
-	 	{
-	 		return playerNames[TURN_INDEX];
-	 	}
+	public String turn()
+	{
+		return playerNames[TURN_INDEX];
+	}
 
 	/**
 	 * Constructor for the board game
@@ -115,45 +115,84 @@ public class Board
 	public void doMove(int value)
 	{
 		int location = 0;
+		int player = 0;
 		if(turn() == playerNames[0])
 		{
-			//for(int i = 0; i < board.size(); i++)
-			//{
-				if(board.get(0).getPlayer(0).equals(playerNames[0]))
+			for(int i = 0; i < board.size(); i++)
+			{
+				if(board.get(i).sizePlayer() > 0)
 				{
-					location = 0;
+					for(int j = 0; j < board.get(i).sizePlayer(); j++)
+					{
+						if(board.get(i).getPlayer(j).contains(playerNames[0]))
+						{
+							location = i;
+							player = j;
+						}
+					}
 				}
-			//}
+			}
 			
-			//location = board.indexOf(board.get(playerIndex));
-			System.out.println(location);
-			board.get(location).removePlayer(location);
-			board.get(location+value).addPlayer(playerNames[0]);
-
+			System.out.println((location+value) + " " + playerNames[0]);
+			board.get(location).removePlayer(player);
+			if((location+value) <= (board.size()-1))
+			{
+				board.get(location+value).addPlayer(playerNames[0]);
+				board.get(location+value).doAction();
+			}
+			else
+			{
+				board.get(board.size()-1).addPlayer(playerNames[0]);
+				board.get(board.size()-1).doAction();
+			}
 		}
 		else if(turn() == playerNames[1])
 		{
-			location = board.indexOf(playerNames[1]);
-			board.get(location).removePlayer(location);
-			board.get(location+value).addPlayer(playerNames[1]);
+			for(int i = 0; i < board.size(); i++)
+			{
+				if(board.get(i).sizePlayer() > 0)
+				{
+					for(int j = 0; j < board.get(i).sizePlayer(); j++)
+					{
+						if(board.get(i).getPlayer(j).contains(playerNames[1]))
+						{
+							location = i;
+							player = j;
+						}
+					}
+				}
+			}
+			
+			System.out.println((location+value) + " " + playerNames[1]);
+			board.get(location).removePlayer(player);
+			if((location+value) <= (board.size()-1))
+			{
+				board.get(location+value).addPlayer(playerNames[1]);
+				board.get(location+value).doAction();
+			}
+			else
+			{
+				board.get(board.size()-1).addPlayer(playerNames[1]);
+				board.get(board.size()-1).doAction();
+			}
 		}
-		
 	}
 
 	/**
 	 * Go to the next player's turn
 	 */
 	 public void next()
-	 	{
-	 		if(TURN_INDEX == 0)
-	 		{
-	 			TURN_INDEX = 1;
-	 		}
-	 		else
-	 		{
-	 			TURN_INDEX = 0;
-	 		}
-	 	}
+	 {
+		 if(TURN_INDEX == 0)
+		 {
+			 TURN_INDEX = 1;
+		 }
+		 else
+		 {
+			 TURN_INDEX = 0;
+		 }
+		 System.out.println(TURN_INDEX);
+	 }
 
 	/**
 	 * Figure out the correspondence between the square number (in the array list)
