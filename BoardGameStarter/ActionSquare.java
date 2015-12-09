@@ -30,7 +30,7 @@ public class ActionSquare extends Square{
 			String number = label.substring(label.length() - 1);
 		}
 		if(label.equals("Finish")){
-			JOptionPane.showMessageDialog(null, "*Celine* wins!");
+			JOptionPane.showMessageDialog(null, board.turn()+" wins!");
 			System.exit(0);
 		}
 	}

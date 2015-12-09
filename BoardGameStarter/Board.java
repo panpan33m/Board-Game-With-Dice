@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -48,16 +49,7 @@ public class Board
 	 */
 	public void shuffle()
 	{
-		Square temp;
-		int index;
-		Random rand = new Random();
-		for(int i = board.size()-2; i > 1; i--)
-		{
-			index = rand.nextInt(i+1)+1;
-			temp = board.get(index);
-			board.set(index, board.get(i));
-			board.set(i, temp);
-		}
+		Collections.shuffle(board.subList(1, board.size()-1));
 	}
 
 	/**
@@ -80,8 +72,10 @@ public class Board
 		//TODO: need to add the players if this is the first square
 		if(board.isEmpty())
 		{
-			newSquare.addPlayer(playerNames[1]);
 			newSquare.addPlayer(playerNames[0]);
+			savePoints.add(newSquare);
+			newSquare.addPlayer(playerNames[1]);
+			savePoints.add(newSquare);
 		}
 		board.add(newSquare);
 		newSquare.setBoard(this);

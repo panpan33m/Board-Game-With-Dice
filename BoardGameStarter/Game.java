@@ -83,7 +83,7 @@ public class Game extends JFrame implements ActionListener {
 		roll.addActionListener(this);
 		bottom.setLayout(new BorderLayout());
 		bottom.add(roll, BorderLayout.WEST);
-		turnLabel = new JLabel("It's *Celine*'s turn", SwingConstants.CENTER);
+		turnLabel = new JLabel("It's "+board.turn()+"'s turn", SwingConstants.CENTER);
 		bottom.add(turnLabel, BorderLayout.CENTER);
 		return bottom; //change - this code is here so the starter code will compile
 
