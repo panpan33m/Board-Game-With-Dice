@@ -30,9 +30,12 @@ public class Game extends JFrame implements ActionListener {
 	private JLabel turnLabel;
 
 	private JDialog dialog = null;
-	
+
 	private static String[] playerNames;
-	public static int PLAYERNUM;
+	private static int PLAYERNUM;
+
+
+	private static Game g;
 
 	/**
 	 * Constructor for the Game - creates the initial board and its squares; then creates the GameBoardPanel that
@@ -43,9 +46,9 @@ public class Game extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Board Game");
 		this.setLayout(new BorderLayout());
-		
+
 		board = new Board(playerNames);
-		
+
 		//Add the squares to the board. Don't worry about order (except for start/end)
 		board.addSquare(new ActionSquare("Start"));
 		int count = 2;
@@ -111,7 +114,7 @@ public class Game extends JFrame implements ActionListener {
 		for(int i=0, num=1; i<PLAYERNUM; i++,num++){
 			playerNames[i] = JOptionPane.showInputDialog(null, "Please enter the user name for player "+num);
 		}
-		Game g = new Game();
+		g = new Game();
 		g.setVisible(true);
 	}
 
@@ -126,6 +129,18 @@ public class Game extends JFrame implements ActionListener {
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 			board.doMove(diceNumber);
+			if(board.hitFinish()){
+				int replay = JOptionPane.showConfirmDialog(this, "Do you want to play another game?", "", JOptionPane.YES_NO_OPTION);
+				if(replay == JOptionPane.YES_OPTION){
+					g.dispose();
+					g.setVisible(false);
+					g = new Game();
+					g.setVisible(true);
+				}
+				else{
+					System.exit(0);
+				}
+			}
 			this.remove(gbp);
 			gbp = new GameBoardPanel(board);
 			this.add(gbp,BorderLayout.CENTER);

@@ -27,13 +27,11 @@ public class ActionSquare extends Square{
 			board.next();
 		}
 		else if(label.contains("Save Point")){
-			String number = label.substring(label.length() - 1);
 			board.savePoint(this);
 			board.next();
 		}
 		else if(label.equals("Finish")){
-			JOptionPane.showMessageDialog(null, board.turn()+" wins!");
-			System.exit(0);
+			JOptionPane.showMessageDialog(null, board.turn()+" wins!");		
 		}
 	}
 

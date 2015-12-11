@@ -13,7 +13,7 @@ public class Board
 {
 
 	public static final int BOARDSIZE = 9;
-	public int TURN_INDEX = 0;
+	private int TURN_INDEX = 0;
 
 	private String[] playerNames;
 	private ArrayList<ArrayList<Square>> SavePoints = new ArrayList<ArrayList<Square>>();
@@ -130,6 +130,12 @@ public class Board
 		board.add(newSquare);
 		newSquare.setBoard(this);
 
+	}
+	
+	public boolean hitFinish(){
+		if(board.get(board.size()-1).sizePlayer()>0)
+			return true;
+		return false;
 	}
 
 	/**
