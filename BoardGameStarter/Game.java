@@ -30,17 +30,22 @@ public class Game extends JFrame implements ActionListener {
 	private JLabel turnLabel;
 
 	private JDialog dialog = null;
+	
+	private static String[] playerNames;
+	public static int PLAYERNUM;
 
-/**
- * Constructor for the Game - creates the initial board and its squares; then creates the GameBoardPanel that
- * will display them
- */
+	/**
+	 * Constructor for the Game - creates the initial board and its squares; then creates the GameBoardPanel that
+	 * will display them
+	 */
 	public Game() {
 		this.setSize(800,800);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Board Game");
 		this.setLayout(new BorderLayout());
-		board = new Board(new String[]{"Alice","Bob"});
+		
+		board = new Board(playerNames);
+		
 		//Add the squares to the board. Don't worry about order (except for start/end)
 		board.addSquare(new ActionSquare("Start"));
 		int count = 2;
@@ -90,6 +95,22 @@ public class Game extends JFrame implements ActionListener {
 	}
 
 	public static void main(String [] args) {
+		while(true){
+			try{
+				String playerNum = JOptionPane.showInputDialog("Please enter the number of players(2-4): ");
+				PLAYERNUM = Integer.parseInt(playerNum);
+				if(PLAYERNUM<2 || PLAYERNUM>4)
+					throw new Exception();
+				break;
+			}
+			catch(Exception e){
+				JOptionPane.showMessageDialog(null, "Please enter a number between 2 and 4.");
+			}
+		}
+		playerNames = new String[PLAYERNUM];
+		for(int i=0, num=1; i<PLAYERNUM; i++,num++){
+			playerNames[i] = JOptionPane.showInputDialog(null, "Please enter the user name for player "+num);
+		}
 		Game g = new Game();
 		g.setVisible(true);
 	}
