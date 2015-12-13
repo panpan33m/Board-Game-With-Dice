@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -7,7 +8,7 @@ import javax.swing.JPanel;
  * @author jburge
  *
  */
-public abstract class Square {
+public abstract class Square extends JPanel{
 	
 
 	protected Board board;
@@ -38,6 +39,7 @@ public abstract class Square {
 	public void setBoard(Board b) {
 		board = b;
 	}
+	
 	
 	public abstract void doAction();
 	

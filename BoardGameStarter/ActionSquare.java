@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -9,6 +10,8 @@ public class ActionSquare extends Square{
 	public ActionSquare(String label) {
 		super();
 		this.label = label;
+		
+		
 	}
 
 	

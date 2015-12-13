@@ -17,6 +17,8 @@ public class Board
 
 	private String[] playerNames;
 	private ArrayList<ArrayList<Square>> SavePoints = new ArrayList<ArrayList<Square>>();
+	private Square s;
+	private int n;
 
 	/**
 	 * An array list of all the squares on our board
@@ -33,6 +35,11 @@ public class Board
 	public String turn()
 	{
 		return playerNames[TURN_INDEX];
+	}
+	
+	public int turnIndex()
+	{
+		return TURN_INDEX;
 	}
 
 	/**
@@ -132,11 +139,16 @@ public class Board
 
 	}
 	
+	/**
+	 * Boolean returns if a player finished the game
+	 * @return
+	 */
 	public boolean hitFinish(){
 		if(board.get(board.size()-1).sizePlayer()>0)
 			return true;
 		return false;
 	}
+	
 
 	/**
 	 * Creates our game board

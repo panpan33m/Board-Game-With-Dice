@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -34,6 +36,7 @@ public class Game extends JFrame implements ActionListener {
 	private static String[] playerNames;
 	private static int PLAYERNUM;
 
+	private static ArrayList<Integer> score = new ArrayList<Integer>();
 
 	private static Game g;
 
@@ -56,9 +59,12 @@ public class Game extends JFrame implements ActionListener {
 		this.setVisible(true);
 		//Add the squares to the board. Don't worry about order (except for start/end)
 		board.addSquare(new ActionSquare("Start"));
+		//board.getSquare(0).setBackground(Color.RED);
+		
 		int count = 2;
 		for (int i=0; i<window.getNumber(0); ++i) {
 			board.addSquare(new ActionSquare("Roll Again"));
+			
 			count++;
 		}
 		for (int i=0; i<window.getNumber(1); ++i) {
@@ -138,6 +144,11 @@ public class Game extends JFrame implements ActionListener {
 			}
 			playerNames[i] = ans;
 		}
+		for(int i = 0; i < PLAYERNUM; i++)
+		{
+			score.add(0);
+		}
+			
 		g = new Game();
 		g.setVisible(true);
 	}
@@ -155,14 +166,20 @@ public class Game extends JFrame implements ActionListener {
 	 * works like the one in the example.
 	 *
 	 */
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		if (e.getActionCommand().equals("Roll")){
 			rand = new Random();
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 			board.doMove(diceNumber);
+			
 			if(board.hitFinish()){
-				int replay = JOptionPane.showConfirmDialog(this, "Do you want to play another game?", "", JOptionPane.YES_NO_OPTION);
+				score.set(board.turnIndex(), score.get(board.turnIndex()) + 1);
+				
+				int replay = JOptionPane.showConfirmDialog(this, "Do you want to play another game?" + System.lineSeparator() 
+				+ updateScores(), "Play Again?", 
+						JOptionPane.YES_NO_OPTION);
 				if(replay == JOptionPane.YES_OPTION){
 					g.dispose();
 					g.setVisible(false);
@@ -173,6 +190,7 @@ public class Game extends JFrame implements ActionListener {
 					System.exit(0);
 				}
 			}
+			
 			this.remove(gbp);
 			gbp = new GameBoardPanel(board);
 			this.add(gbp,BorderLayout.CENTER);
@@ -182,6 +200,20 @@ public class Game extends JFrame implements ActionListener {
 		}
 		//take care of moving the player around and updating the board!
 		//this.update(this.getGraphics());
+	}
+	
+	/**
+	 * method to print out the scores
+	 * @return
+	 */
+	public String updateScores()
+	{
+		String s = "";
+		for(int i = 0; i < score.size(); i++)
+		{
+			s += playerNames[i] + " has won " + score.get(i) + " game(s)" + System.lineSeparator();
+		}
+		return s;
 	}
 
 }
