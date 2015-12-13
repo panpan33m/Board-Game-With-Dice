@@ -49,22 +49,27 @@ public class Game extends JFrame implements ActionListener {
 
 		board = new Board(playerNames);
 
+		SquareTypeNumberGUI window = new SquareTypeNumberGUI();
+		//window.setLocation(this.getLocation());
+		this.setVisible(false);
+		window.showDialog(null, "Number of each type of square");
+		this.setVisible(true);
 		//Add the squares to the board. Don't worry about order (except for start/end)
 		board.addSquare(new ActionSquare("Start"));
 		int count = 2;
-		for (int i=0; i<3; ++i) {
+		for (int i=0; i<window.getNumber(0); ++i) {
 			board.addSquare(new ActionSquare("Roll Again"));
 			count++;
 		}
-		for (int i=0; i<5; ++i) {
+		for (int i=0; i<window.getNumber(1); ++i) {
 			board.addSquare(new ActionSquare("Go Back"));
 			count++;
 		}
-		for (int i=0; i<2; ++i) {
+		for (int i=0; i<window.getNumber(2); ++i) {
 			board.addSquare(new ActionSquare("Shuffle"));
 			count++;
 		}
-		for (int i=0, j=1; i<6; ++i, ++j) {
+		for (int i=0, j=1; i<window.getNumber(3); ++i, ++j) {
 			board.addSquare(new ActionSquare("Save Point"+j));
 			count++;
 		}
@@ -101,6 +106,8 @@ public class Game extends JFrame implements ActionListener {
 		while(true){
 			try{
 				String playerNum = JOptionPane.showInputDialog("Please enter the number of players(2-4): ");
+				if(playerNum == null)
+					System.exit(0);
 				PLAYERNUM = Integer.parseInt(playerNum);
 				if(PLAYERNUM<2 || PLAYERNUM>4)
 					throw new Exception();
@@ -112,10 +119,35 @@ public class Game extends JFrame implements ActionListener {
 		}
 		playerNames = new String[PLAYERNUM];
 		for(int i=0, num=1; i<PLAYERNUM; i++,num++){
-			playerNames[i] = JOptionPane.showInputDialog(null, "Please enter the user name for player "+num);
+			String ans;
+			while(true){
+				ans = JOptionPane.showInputDialog(null, "Please enter the user name for player "+num);
+				if(ans == null){
+					System.exit(0);
+				}
+				else if(ans.equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid name");
+					continue;
+				}
+				else if(isIn(playerNames,i,ans)){
+					JOptionPane.showMessageDialog(null, "Name already taken!");
+					continue;
+				}
+				break;
+			}
+			playerNames[i] = ans;
 		}
 		g = new Game();
 		g.setVisible(true);
+	}
+
+	private static boolean isIn(String[] playerNames2, int i, String ans) {
+		for(int j=0; j<i; j++){
+			if(playerNames2[j].equals(ans))
+				return true;
+		}
+		return false;
 	}
 
 	/**
