@@ -48,6 +48,10 @@ public class Game extends JFrame implements ActionListener {
 
 	private JLabel player4;
 
+	private JPanel makeCtrl;
+
+	private JPanel matching;
+
 	private static String[] playerNames;
 	private static int PLAYERNUM;
 
@@ -102,9 +106,11 @@ public class Game extends JFrame implements ActionListener {
 		//Shuffle our board so the order is random
 		board.shuffle();
 		gbp = new GameBoardPanel(board);
+		makeCtrl = makeControl();
+		matching = matching();
 		this.add(gbp,BorderLayout.CENTER);
-		this.add(makeControl(),BorderLayout.SOUTH);
-		this.add(matching(), BorderLayout.NORTH);
+		this.add(makeCtrl,BorderLayout.SOUTH);
+		this.add(matching, BorderLayout.NORTH);
 		rand = new Random(); //used when rolling dice
 	}
 
@@ -235,7 +241,28 @@ public class Game extends JFrame implements ActionListener {
 			rand = new Random();
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
-			board.doMove(diceNumber);
+			for(int i=0; i<diceNumber; i++){
+				board.doMove(1);
+				try {
+				    Thread.sleep(500);
+				} 
+				catch (InterruptedException ex) {
+				    ex.printStackTrace();
+				}
+				this.remove(matching);
+				this.remove(makeCtrl);
+				this.remove(gbp);
+				gbp = new GameBoardPanel(board);
+				makeCtrl = makeControl();
+				matching = matching();
+				this.add(gbp,BorderLayout.CENTER);
+				this.add(makeCtrl,BorderLayout.SOUTH);
+				this.add(matching, BorderLayout.NORTH);
+				gbp.update();
+				this.revalidate();
+				this.update(this.getGraphics());
+			}
+			board.doAction();
 
 			if(board.hitFinish()){
 				score.set(board.turnIndex(), score.get(board.turnIndex()) + 1);
@@ -253,12 +280,17 @@ public class Game extends JFrame implements ActionListener {
 					System.exit(0);
 				}
 			}
-
+			this.remove(matching);
+			this.remove(makeCtrl);
 			this.remove(gbp);
 			gbp = new GameBoardPanel(board);
+			makeCtrl = makeControl();
+			matching = matching();
 			this.add(gbp,BorderLayout.CENTER);
-			this.add(makeControl(),BorderLayout.SOUTH);
+			this.add(makeCtrl,BorderLayout.SOUTH);
+			this.add(matching, BorderLayout.NORTH);
 			gbp.update();
+			this.revalidate();
 			this.update(this.getGraphics());
 		}
 		//take care of moving the player around and updating the board!
