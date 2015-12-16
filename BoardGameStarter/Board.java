@@ -1,13 +1,16 @@
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  * This class defines your game board
- * @author jburge
+ * @author jburge, apham, ctao
  *
  */
 public class Board
@@ -20,11 +23,15 @@ public class Board
 	private ArrayList<ArrayList<Square>> SavePoints = new ArrayList<ArrayList<Square>>();
 	private Square s;
 	private int n;
+	
+	private boolean R_AGAIN = false;
 
 	/**
 	 * An array list of all the squares on our board
 	 */
 	private ArrayList<Square> board = new ArrayList<Square>();
+	
+	private static ArrayList<Square> emptySquares = new ArrayList<Square>();
 	/**
 	 * The people playing the game
 	 */
@@ -120,6 +127,11 @@ public class Board
 		}	
 	}
 
+	/**
+	 * return the player number
+	 * @param name
+	 * @return
+	 */
 	public int getPlayerNum(String name){
 		for(int i=0; i<playerNames.length;i++)
 		{
@@ -212,6 +224,14 @@ public class Board
 				if((location+value) <= (board.size()-1))
 				{
 					board.get(location+value).addPlayer(playerNames[a]);
+					if(board.get(location+value).getLabel().equals("Roll Again"))
+					{
+						R_AGAIN = true;
+					}
+					else if(!board.get(location+value).getLabel().equals("Roll Again"))
+					{
+						R_AGAIN = false;
+					}
 					board.get(location+value).doAction();
 				}
 				else
@@ -287,7 +307,17 @@ public class Board
 		return -1;
 
 	}
+	
+	public static ArrayList<Square> getEmptySquares()
+	{
+		return emptySquares;
+	}
 
+	
+	public boolean rollAgain()
+	{
+		return R_AGAIN;
+	}
 
 	/**
 	 * This main method is here for testing purposes only. The game is

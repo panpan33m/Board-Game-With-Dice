@@ -4,8 +4,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,9 +18,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 /**
  * Main frame for the Board Game.
- * @author jburge
+ * @author jburge, apham, ctao
  *
  */
 public class Game extends JFrame implements ActionListener {
@@ -49,8 +54,14 @@ public class Game extends JFrame implements ActionListener {
 	private JLabel player4;
 
 	private static String[] playerNames;
+	
 	private static int PLAYERNUM;
+	
+	private static boolean S_PLAY = false;
 
+	/**
+	 * ArrayList to keep track of scores
+	 */
 	private static ArrayList<Integer> score = new ArrayList<Integer>();
 
 	private static Game g;
@@ -106,6 +117,12 @@ public class Game extends JFrame implements ActionListener {
 		this.add(makeControl(),BorderLayout.SOUTH);
 		this.add(matching(), BorderLayout.NORTH);
 		rand = new Random(); //used when rolling dice
+		
+		if(singlePlay() == true)
+		{
+			computerPlay();
+		}
+		//playMusic();
 	}
 
 	private JPanel matching(){
@@ -117,21 +134,25 @@ public class Game extends JFrame implements ActionListener {
 		Pic1 = Icon1.getImage();
 		Pic1 = Pic1.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		JLabel picLabel1 = new JLabel(new ImageIcon(Pic1));
+		
 		Image Pic2 = null;
 		ImageIcon Icon2 = new ImageIcon("duck.png");
 		Pic2 = Icon2.getImage();
 		Pic2 = Pic2.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		JLabel picLabel2 = new JLabel(new ImageIcon(Pic2));
+		
 		Image Pic3 = null;
 		ImageIcon Icon3 = new ImageIcon("sheep.png");
 		Pic3 = Icon3.getImage();
 		Pic3 = Pic3.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		JLabel picLabel3 = new JLabel(new ImageIcon(Pic3));
+		
 		Image Pic4 = null;
 		ImageIcon Icon4 = new ImageIcon("watermelon.png");
 		Pic4 = Icon4.getImage();
 		Pic4 = Pic4.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		JLabel picLabel4 = new JLabel(new ImageIcon(Pic4));
+		
 		if(0<playerNames.length){
 			player1 = new JLabel(playerNames[0]+": ");
 			top.add(player1);
@@ -172,7 +193,14 @@ public class Game extends JFrame implements ActionListener {
 	}
 
 	public static void main(String [] args) {
-		while(true){
+
+		Object[] options = { "Single Player", "Multiplayer" };
+		int whichPlay = JOptionPane.showOptionDialog(null, "Would you like to play:", "WELCOME TO OUR BOARD GAME",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+				null, options, options[0]);
+		
+		if(whichPlay == 1)
+		{
 			try{
 				String playerNum = JOptionPane.showInputDialog("Please enter the number of players(2-4): ");
 				if(playerNum == null)
@@ -180,38 +208,68 @@ public class Game extends JFrame implements ActionListener {
 				PLAYERNUM = Integer.parseInt(playerNum);
 				if(PLAYERNUM<2 || PLAYERNUM>4)
 					throw new Exception();
-				break;
+				//break;
 			}
 			catch(Exception e){
 				JOptionPane.showMessageDialog(null, "Please enter a number between 2 and 4.");
 			}
+
+			playerNames = new String[PLAYERNUM];
+			for(int i=0, num=1; i<PLAYERNUM; i++,num++){
+				String ans;
+				while(true){
+					ans = JOptionPane.showInputDialog(null, "Please enter the user name for player "+num);
+					if(ans == null){
+						System.exit(0);
+					}
+					else if(ans.equals(""))
+					{
+						JOptionPane.showMessageDialog(null, "Please enter a valid name");
+						continue;
+					}
+					else if(isIn(playerNames,i,ans)){
+						JOptionPane.showMessageDialog(null, "Name already taken!");
+						continue;
+					}
+					break;
+				}
+				playerNames[i] = ans;
+			}
+			for(int i = 0; i < PLAYERNUM; i++)
+			{
+				score.add(0);
+			}
 		}
-		playerNames = new String[PLAYERNUM];
-		for(int i=0, num=1; i<PLAYERNUM; i++,num++){
-			String ans;
+		else
+		{
+			S_PLAY = true;
+			
+			playerNames = new String[2];
+			
+			playerNames[0] = "Computer";
+			
+			String one;
 			while(true){
-				ans = JOptionPane.showInputDialog(null, "Please enter the user name for player "+num);
-				if(ans == null){
+				one = JOptionPane.showInputDialog(null, "Please enter your user name");
+				if(one == null){
 					System.exit(0);
 				}
-				else if(ans.equals(""))
+				else if(one.equals(""))
 				{
 					JOptionPane.showMessageDialog(null, "Please enter a valid name");
 					continue;
 				}
-				else if(isIn(playerNames,i,ans)){
-					JOptionPane.showMessageDialog(null, "Name already taken!");
-					continue;
-				}
 				break;
 			}
-			playerNames[i] = ans;
-		}
-		for(int i = 0; i < PLAYERNUM; i++)
-		{
-			score.add(0);
-		}
+			playerNames[1] = one;
+			
+			for(int i = 0; i < 2; i++)
+			{
+				score.add(0);
+			}
 
+		}
+		
 		g = new Game();
 		g.setVisible(true);
 	}
@@ -235,6 +293,7 @@ public class Game extends JFrame implements ActionListener {
 			rand = new Random();
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
+			
 			board.doMove(diceNumber);
 
 			if(board.hitFinish()){
@@ -277,6 +336,39 @@ public class Game extends JFrame implements ActionListener {
 			s += playerNames[i] + " has won " + score.get(i) + " game(s)" + System.lineSeparator();
 		}
 		return s;
+	}
+	
+	public void computerPlay()
+	{
+		if(board.turn() == playerNames[0])
+		{
+			JOptionPane.showMessageDialog(null, "Computer will go first!");
+			
+			roll.doClick();
+			if(board.rollAgain() == true)
+			{
+				while(board.rollAgain() == true)
+				{
+					JOptionPane.showMessageDialog(null, "Computer will roll again!");
+					roll.doClick();
+				}
+			}
+		}
+	}
+	
+	public static boolean singlePlay()
+	{
+		return S_PLAY;
+	}
+	
+	public void playMusic()
+	{
+		String path = "/Users/alinabpham/Music/iTunes/iTunes Media/Music/Compilations/"
+				+ "Frozen (Original Motion Picture Soundtrack)/Let_It_Go.mp3";
+	    Media song = new Media(new File(path).toURI().toString());
+
+		MediaPlayer mediaPlayer = new MediaPlayer(song);
+		mediaPlayer.play();
 	}
 
 }

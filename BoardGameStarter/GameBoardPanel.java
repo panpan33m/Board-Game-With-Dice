@@ -14,6 +14,8 @@ public class GameBoardPanel extends JPanel {
 
 
 	private ArrayList<SquarePanel> tiles = new ArrayList<SquarePanel>();
+	
+	private ArrayList<SquarePanel> emptyPanels = new ArrayList<SquarePanel>();
 
 	/**
 	 * Create the board and display the squares. 
@@ -40,7 +42,9 @@ public class GameBoardPanel extends JPanel {
 				}
 			}
 		}
+
 	}
+	
 
 	/**
 	 * Updates the board as players move around
