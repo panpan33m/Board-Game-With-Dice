@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -31,7 +32,12 @@ public class SquarePanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		JPanel topPanel = new JPanel();
 		
-		topPanel.add(new JLabel(s.getLabel()));
+		Font font = new Font("Courier New", Font.BOLD, 13);
+		
+		JLabel newLabel = new JLabel(s.getLabel());
+		newLabel.setFont(font);
+		
+		topPanel.add(newLabel);
 		
 		subPanel = new JPanel();
 		
@@ -84,7 +90,10 @@ public class SquarePanel extends JPanel {
 		subPanel.setLayout(new FlowLayout());
 		for(int i=0; i<model.sizePlayer(); i++)
 		{
+			Font font2 = new Font("Garamond", Font.PLAIN, 17);
+
 			name = new JLabel(model.getPlayer(i));
+			name.setFont(font2);
 			subPanel.add(name);
 		}
 		this.revalidate();

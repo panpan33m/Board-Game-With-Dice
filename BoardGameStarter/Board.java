@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -157,11 +158,15 @@ public class Board
 	public Square[][] createBoard()
 	{
 		Square[][] result = new Square[BOARDSIZE][BOARDSIZE];
-		for (int x=0; x<BOARDSIZE; ++x) {
-			for (int y=0; y<BOARDSIZE; ++y) {
+		for (int x=0; x<BOARDSIZE; ++x) 
+		{
+			for (int y=0; y<BOARDSIZE; ++y) 
+			{
 				int position = mapSquareToPosition(x,y);
 				result[x][y]=null;
-				if ((position!=-1)&&(position<board.size())) {
+				
+				if ((position!=-1)&&(position<board.size())) 
+				{
 					result[x][y] = board.get(position);
 				}
 			}

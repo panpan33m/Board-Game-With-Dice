@@ -57,9 +57,9 @@ public class Game extends JFrame implements ActionListener {
 		this.setVisible(false);
 		window.showDialog(null, "Number of each type of square");
 		this.setVisible(true);
+		
 		//Add the squares to the board. Don't worry about order (except for start/end)
 		board.addSquare(new ActionSquare("Start"));
-		//board.getSquare(0).setBackground(Color.RED);
 		
 		int count = 2;
 		for (int i=0; i<window.getNumber(0); ++i) {
