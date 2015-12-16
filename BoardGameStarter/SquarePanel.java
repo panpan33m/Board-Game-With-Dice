@@ -2,10 +2,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,12 +26,13 @@ import javax.swing.border.Border;
  *
  */
 public class SquarePanel extends JPanel {
-	
+
 	private Square model;
 	private JPanel subPanel;
 	private JLabel name;
 	private Color color;
-	
+	private Graphics g;
+
 	public SquarePanel(Square s) {
 		super();
 		model = s;
@@ -31,21 +40,21 @@ public class SquarePanel extends JPanel {
 		this.setBorder(blackline);
 		this.setLayout(new BorderLayout());
 		JPanel topPanel = new JPanel();
-		
+
 		Font font = new Font("Courier New", Font.BOLD, 13);
-		
+
 		JLabel newLabel = new JLabel(s.getLabel());
 		newLabel.setFont(font);
-		
+
 		topPanel.add(newLabel);
-		
+
 		subPanel = new JPanel();
-		
+
 		if(s.getLabel().equals("Start"))
 		{
 			topPanel.setBackground(Color.GREEN);
 			subPanel.setBackground(Color.GREEN);
-			
+
 		}
 		else if(s.getLabel().equals("Roll Again"))
 		{
@@ -73,12 +82,12 @@ public class SquarePanel extends JPanel {
 			topPanel.setBackground(Color.WHITE);
 			subPanel.setBackground(Color.WHITE);
 		}
-		
+
 		this.add(topPanel,BorderLayout.NORTH);
 		this.add(subPanel,BorderLayout.CENTER);
-		
+
 		update();
-		
+
 	}
 
 	/**
@@ -95,27 +104,47 @@ public class SquarePanel extends JPanel {
 			name = new JLabel(model.getPlayer(i));
 			int j = model.board.getPlayerNum(model.getPlayer(i));
 			switch (j){
-				case 0:
-					name.setForeground(Color.RED);
-					break;
-				case 1:
-					name.setForeground(Color.BLUE);
-					break;
-				case 2:
-					name.setForeground(Color.YELLOW);
-					break;
-				case 3:
-					name.setForeground(Color.GREEN);
-					break;
+			case 0:
+				Image Pic1 = null;
+				ImageIcon Icon1 = new ImageIcon("cat2.png");
+				Pic1 = Icon1.getImage();
+				Pic1 = Pic1.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+				JLabel picLabel1 = new JLabel(new ImageIcon(Pic1));
+				subPanel.add(picLabel1);
+				break;
+			case 1:
+				Image Pic2 = null;
+				ImageIcon Icon2 = new ImageIcon("duck.png");
+				Pic2 = Icon2.getImage();
+				Pic2 = Pic2.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+				JLabel picLabel2 = new JLabel(new ImageIcon(Pic2));
+				subPanel.add(picLabel2);
+				break;
+			case 2:
+				Image Pic3 = null;
+				ImageIcon Icon3 = new ImageIcon("sheep.png");
+				Pic3 = Icon3.getImage();
+				Pic3 = Pic3.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+				JLabel picLabel3 = new JLabel(new ImageIcon(Pic3));
+				subPanel.add(picLabel3);
+				break;
+			case 3:
+				Image Pic4 = null;
+				ImageIcon Icon4 = new ImageIcon("watermelon.png");
+				Pic4 = Icon4.getImage();
+				Pic4 = Pic4.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+				JLabel picLabel4 = new JLabel(new ImageIcon(Pic4));
+				subPanel.add(picLabel4);
+				break;
 			}
 			name.setFont(font2);
-			subPanel.add(name);
+			//subPanel.add(name);
 		}
 		this.revalidate();
 		this.repaint();
 	}
 
-	
+
 	/**
 	 * This method is just for testing.
 	 * @param args

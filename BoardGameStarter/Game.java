@@ -1,10 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -33,6 +36,18 @@ public class Game extends JFrame implements ActionListener {
 
 	private JDialog dialog = null;
 
+	private JLabel match;
+
+	private JPanel top;
+
+	private JLabel player1;
+
+	private JLabel player2;
+
+	private JLabel player3;
+
+	private JLabel player4;
+
 	private static String[] playerNames;
 	private static int PLAYERNUM;
 
@@ -57,14 +72,14 @@ public class Game extends JFrame implements ActionListener {
 		this.setVisible(false);
 		window.showDialog(null, "Number of each type of square");
 		this.setVisible(true);
-		
+
 		//Add the squares to the board. Don't worry about order (except for start/end)
 		board.addSquare(new ActionSquare("Start"));
-		
+
 		int count = 2;
 		for (int i=0; i<window.getNumber(0); ++i) {
 			board.addSquare(new ActionSquare("Roll Again"));
-			
+
 			count++;
 		}
 		for (int i=0; i<window.getNumber(1); ++i) {
@@ -89,7 +104,55 @@ public class Game extends JFrame implements ActionListener {
 		gbp = new GameBoardPanel(board);
 		this.add(gbp,BorderLayout.CENTER);
 		this.add(makeControl(),BorderLayout.SOUTH);
+		this.add(matching(), BorderLayout.NORTH);
 		rand = new Random(); //used when rolling dice
+	}
+
+	private JPanel matching(){
+		top = new JPanel();
+		top.setLayout(new GridLayout(1,8));
+
+		Image Pic1 = null;
+		ImageIcon Icon1 = new ImageIcon("cat2.png");
+		Pic1 = Icon1.getImage();
+		Pic1 = Pic1.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+		JLabel picLabel1 = new JLabel(new ImageIcon(Pic1));
+		Image Pic2 = null;
+		ImageIcon Icon2 = new ImageIcon("duck.png");
+		Pic2 = Icon2.getImage();
+		Pic2 = Pic2.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+		JLabel picLabel2 = new JLabel(new ImageIcon(Pic2));
+		Image Pic3 = null;
+		ImageIcon Icon3 = new ImageIcon("sheep.png");
+		Pic3 = Icon3.getImage();
+		Pic3 = Pic3.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+		JLabel picLabel3 = new JLabel(new ImageIcon(Pic3));
+		Image Pic4 = null;
+		ImageIcon Icon4 = new ImageIcon("watermelon.png");
+		Pic4 = Icon4.getImage();
+		Pic4 = Pic4.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+		JLabel picLabel4 = new JLabel(new ImageIcon(Pic4));
+		if(0<playerNames.length){
+			player1 = new JLabel(playerNames[0]+": ");
+			top.add(player1);
+			top.add(picLabel1);
+		}
+		if(1<playerNames.length){
+			player2 = new JLabel(playerNames[1]+": ");
+			top.add(player2);
+			top.add(picLabel2);
+		}
+		if(2<playerNames.length){
+			player3 = new JLabel(playerNames[2]+": ");
+			top.add(player3);
+			top.add(picLabel3);
+		}
+		if(3<playerNames.length){
+			player4 = new JLabel(playerNames[3]+": ");
+			top.add(player4);
+			top.add(picLabel4);
+		}
+		return top;
 	}
 
 	/**
@@ -148,7 +211,7 @@ public class Game extends JFrame implements ActionListener {
 		{
 			score.add(0);
 		}
-			
+
 		g = new Game();
 		g.setVisible(true);
 	}
@@ -173,13 +236,13 @@ public class Game extends JFrame implements ActionListener {
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 			board.doMove(diceNumber);
-			
+
 			if(board.hitFinish()){
 				score.set(board.turnIndex(), score.get(board.turnIndex()) + 1);
-				
+
 				int replay = JOptionPane.showConfirmDialog(this, "Do you want to play another game?" + System.lineSeparator() 
 				+ updateScores(), "Play Again?", 
-						JOptionPane.YES_NO_OPTION);
+				JOptionPane.YES_NO_OPTION);
 				if(replay == JOptionPane.YES_OPTION){
 					g.dispose();
 					g.setVisible(false);
@@ -190,7 +253,7 @@ public class Game extends JFrame implements ActionListener {
 					System.exit(0);
 				}
 			}
-			
+
 			this.remove(gbp);
 			gbp = new GameBoardPanel(board);
 			this.add(gbp,BorderLayout.CENTER);
@@ -201,7 +264,7 @@ public class Game extends JFrame implements ActionListener {
 		//take care of moving the player around and updating the board!
 		//this.update(this.getGraphics());
 	}
-	
+
 	/**
 	 * method to print out the scores
 	 * @return
