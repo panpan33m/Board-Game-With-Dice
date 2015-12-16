@@ -246,15 +246,6 @@ public class Board
 				if((location+value) <= (board.size()-1))
 				{
 					board.get(location+value).addPlayer(playerNames[a]);
-
-					if(board.get(location+value).getLabel().equals("Roll Again"))
-					{
-						R_AGAIN = true;
-					}
-					else if(!board.get(location+value).getLabel().equals("Roll Again"))
-					{
-						R_AGAIN = false;
-					}
 					board.get(location+value).doAction();
 
 				}
@@ -339,7 +330,34 @@ public class Board
 	
 	public boolean rollAgain()
 	{
-		return R_AGAIN;
+		boolean rAgain = false;
+		if(turn().equals(playerNames[0]))
+		{
+			int location = 0;
+
+			for(int i = 0; i < board.size(); i++)
+			{
+				if(board.get(i).sizePlayer() > 0)
+				{
+					for(int j = 0; j < board.get(i).sizePlayer(); j++)
+					{
+						if(board.get(i).getPlayer(j).equals(playerNames[0]))
+						{
+							location = i;
+						}
+					}
+				}
+			}
+			if(board.get(location).getLabel().equals("Roll Again"))
+			{
+				rAgain = true;
+			}
+			else if(!board.get(location).getLabel().equals("Roll Again"))
+			{
+				rAgain = false;
+			}
+		}
+		return rAgain;
 	}
 
 	/**

@@ -126,7 +126,7 @@ public class Game extends JFrame implements ActionListener {
 		
 		if(singlePlay() == true)
 		{
-			if(board.turn() == playerNames[0])
+			if(board.turn().equals(playerNames[0]))
 			{
 				roll.doClick();
 				if(board.rollAgain())
@@ -290,6 +290,8 @@ public class Game extends JFrame implements ActionListener {
 		
 		g = new Game();
 		g.setVisible(true);
+		
+		
 		
 	}
 
