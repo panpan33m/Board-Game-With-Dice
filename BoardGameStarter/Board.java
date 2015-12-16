@@ -112,7 +112,14 @@ public class Board
 		}	
 	}
 
-
+	public int getPlayerNum(String name){
+		for(int i=0; i<playerNames.length;i++)
+		{
+			if(playerNames[i].equals(name))
+				return i;
+		}
+		return -1;
+	}
 
 
 	/**

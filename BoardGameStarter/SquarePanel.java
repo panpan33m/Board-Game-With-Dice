@@ -49,6 +49,21 @@ public class SquarePanel extends JPanel {
 		for(int i=0; i<model.sizePlayer(); i++)
 		{
 			name = new JLabel(model.getPlayer(i));
+			int j = model.board.getPlayerNum(model.getPlayer(i));
+			switch (j){
+				case 0:
+					name.setForeground(Color.RED);
+					break;
+				case 1:
+					name.setForeground(Color.BLUE);
+					break;
+				case 2:
+					name.setForeground(Color.YELLOW);
+					break;
+				case 3:
+					name.setForeground(Color.GREEN);
+					break;
+			}
 			subPanel.add(name);
 		}
 		this.revalidate();
