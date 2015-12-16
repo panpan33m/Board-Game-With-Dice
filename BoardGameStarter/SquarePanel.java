@@ -93,7 +93,6 @@ public class SquarePanel extends JPanel {
 			Font font2 = new Font("Garamond", Font.PLAIN, 17);
 
 			name = new JLabel(model.getPlayer(i));
-<<<<<<< HEAD
 			int j = model.board.getPlayerNum(model.getPlayer(i));
 			switch (j){
 				case 0:
@@ -109,9 +108,7 @@ public class SquarePanel extends JPanel {
 					name.setForeground(Color.GREEN);
 					break;
 			}
-=======
 			name.setFont(font2);
->>>>>>> 823064b4d0caa0559e6e7af513d35848b27e6afe
 			subPanel.add(name);
 		}
 		this.revalidate();
