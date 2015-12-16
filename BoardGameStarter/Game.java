@@ -126,8 +126,20 @@ public class Game extends JFrame implements ActionListener {
 		
 		if(singlePlay() == true)
 		{
-			computerPlay();
+			if(board.turn() == playerNames[0])
+			{
+				roll.doClick();
+				if(board.rollAgain())
+				{
+					while(board.rollAgain())
+					{
+						JOptionPane.showMessageDialog(null, "Computer will roll again!");
+						roll.doClick();
+					}
+				}
+			}
 		}
+		
 		//playMusic();
 	}
 
@@ -278,6 +290,7 @@ public class Game extends JFrame implements ActionListener {
 		
 		g = new Game();
 		g.setVisible(true);
+		
 	}
 
 	private static boolean isIn(String[] playerNames2, int i, String ans) {
@@ -373,23 +386,6 @@ public class Game extends JFrame implements ActionListener {
 		return s;
 	}
 	
-	public void computerPlay()
-	{
-		if(board.turn() == playerNames[0])
-		{
-			JOptionPane.showMessageDialog(null, "Computer will go first!");
-			
-			roll.doClick();
-			if(board.rollAgain() == true)
-			{
-				while(board.rollAgain() == true)
-				{
-					JOptionPane.showMessageDialog(null, "Computer will roll again!");
-					roll.doClick();
-				}
-			}
-		}
-	}
 	
 	public static boolean singlePlay()
 	{
