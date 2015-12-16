@@ -193,6 +193,28 @@ public class Board
 		return result;
 	}
 
+	public void doAction(){
+		for(int a=0; a<playerNames.length; a++){
+
+			if(turn().equals(playerNames[a]))
+			{
+				for(int i = 0; i < board.size(); i++)
+				{
+					if(board.get(i).sizePlayer() > 0)
+					{
+						for(int j = 0; j < board.get(i).sizePlayer(); j++)
+						{
+							if(board.get(i).getPlayer(j).equals(playerNames[a]))
+							{
+								board.get(i).doAction();
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	/**
 	 * Move the player to their new position based on the dice roll
 	 * @param value - the dice roll
@@ -211,7 +233,7 @@ public class Board
 					{
 						for(int j = 0; j < board.get(i).sizePlayer(); j++)
 						{
-							if(board.get(i).getPlayer(j).contains(playerNames[a]))
+							if(board.get(i).getPlayer(j).equals(playerNames[a]))
 							{
 								location = i;
 								player = j;
@@ -224,6 +246,7 @@ public class Board
 				if((location+value) <= (board.size()-1))
 				{
 					board.get(location+value).addPlayer(playerNames[a]);
+
 					if(board.get(location+value).getLabel().equals("Roll Again"))
 					{
 						R_AGAIN = true;
@@ -233,11 +256,11 @@ public class Board
 						R_AGAIN = false;
 					}
 					board.get(location+value).doAction();
+
 				}
 				else
 				{
 					board.get(board.size()-1).addPlayer(playerNames[a]);
-					board.get(board.size()-1).doAction();
 				}
 				break;
 			}
