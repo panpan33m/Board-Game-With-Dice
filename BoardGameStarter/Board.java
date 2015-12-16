@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -17,6 +18,8 @@ public class Board
 
 	private String[] playerNames;
 	private ArrayList<ArrayList<Square>> SavePoints = new ArrayList<ArrayList<Square>>();
+	private Square s;
+	private int n;
 
 	/**
 	 * An array list of all the squares on our board
@@ -33,6 +36,11 @@ public class Board
 	public String turn()
 	{
 		return playerNames[TURN_INDEX];
+	}
+	
+	public int turnIndex()
+	{
+		return TURN_INDEX;
 	}
 
 	/**
@@ -139,11 +147,16 @@ public class Board
 
 	}
 	
+	/**
+	 * Boolean returns if a player finished the game
+	 * @return
+	 */
 	public boolean hitFinish(){
 		if(board.get(board.size()-1).sizePlayer()>0)
 			return true;
 		return false;
 	}
+	
 
 	/**
 	 * Creates our game board
@@ -152,11 +165,15 @@ public class Board
 	public Square[][] createBoard()
 	{
 		Square[][] result = new Square[BOARDSIZE][BOARDSIZE];
-		for (int x=0; x<BOARDSIZE; ++x) {
-			for (int y=0; y<BOARDSIZE; ++y) {
+		for (int x=0; x<BOARDSIZE; ++x) 
+		{
+			for (int y=0; y<BOARDSIZE; ++y) 
+			{
 				int position = mapSquareToPosition(x,y);
 				result[x][y]=null;
-				if ((position!=-1)&&(position<board.size())) {
+				
+				if ((position!=-1)&&(position<board.size())) 
+				{
 					result[x][y] = board.get(position);
 				}
 			}

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -22,15 +23,20 @@ public class GameBoardPanel extends JPanel {
 
 		this.setLayout(new GridLayout(Board.BOARDSIZE,Board.BOARDSIZE));
 		Square[][] squares = b.createBoard();
-		for (int y=Board.BOARDSIZE-1; y>=0; --y) {
-			for (int x=0; x<Board.BOARDSIZE; ++x) {
-				if (squares[x][y]!=null) {
+		for (int y=Board.BOARDSIZE-1; y>=0; --y) 
+		{
+			for (int x=0; x<Board.BOARDSIZE; ++x) 
+			{
+				if (squares[x][y]!=null) 
+				{
 					SquarePanel sp = new SquarePanel(squares[x][y]);
 					tiles.add(sp);
 					this.add(sp);
 				}
-				else {
+				else 
+				{
 					this.add(new JPanel());
+					this.setBackground(Color.BLUE);
 				}
 			}
 		}

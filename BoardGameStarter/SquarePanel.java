@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import javax.swing.border.Border;
 
 /**
  * The Square class is a data class. The SquarePanel class is a boundary class
- * that is responsible for displaying the appropriate informaiton about each Square
+ * that is responsible for displaying the appropriate information about each Square
  * @author jburge
  *
  */
@@ -21,6 +22,7 @@ public class SquarePanel extends JPanel {
 	private Square model;
 	private JPanel subPanel;
 	private JLabel name;
+	private Color color;
 	
 	public SquarePanel(Square s) {
 		super();
@@ -30,11 +32,51 @@ public class SquarePanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		JPanel topPanel = new JPanel();
 		
-		topPanel.add(new JLabel(s.getLabel()));
-		this.add(topPanel,BorderLayout.NORTH);
+		Font font = new Font("Courier New", Font.BOLD, 13);
+		
+		JLabel newLabel = new JLabel(s.getLabel());
+		newLabel.setFont(font);
+		
+		topPanel.add(newLabel);
 		
 		subPanel = new JPanel();
+		
+		if(s.getLabel().equals("Start"))
+		{
+			topPanel.setBackground(Color.GREEN);
+			subPanel.setBackground(Color.GREEN);
+			
+		}
+		else if(s.getLabel().equals("Roll Again"))
+		{
+			topPanel.setBackground(Color.PINK);
+			subPanel.setBackground(Color.PINK);		
+		}
+		else if(s.getLabel().equals("Go Back")){
+			topPanel.setBackground(Color.RED);
+			subPanel.setBackground(Color.RED);	
+		}
+		else if(s.getLabel().equals("Shuffle")){
+			topPanel.setBackground(Color.ORANGE);
+			subPanel.setBackground(Color.ORANGE);	
+		}
+		else if(s.getLabel().contains("Save Point")){
+			topPanel.setBackground(Color.CYAN);
+			subPanel.setBackground(Color.CYAN);	
+		}
+		else if(s.getLabel().equals("Finish")){
+			topPanel.setBackground(Color.YELLOW);
+			subPanel.setBackground(Color.YELLOW);		
+		}
+		else
+		{
+			topPanel.setBackground(Color.WHITE);
+			subPanel.setBackground(Color.WHITE);
+		}
+		
+		this.add(topPanel,BorderLayout.NORTH);
 		this.add(subPanel,BorderLayout.CENTER);
+		
 		update();
 		
 	}
@@ -48,7 +90,10 @@ public class SquarePanel extends JPanel {
 		subPanel.setLayout(new FlowLayout());
 		for(int i=0; i<model.sizePlayer(); i++)
 		{
+			Font font2 = new Font("Garamond", Font.PLAIN, 17);
+
 			name = new JLabel(model.getPlayer(i));
+<<<<<<< HEAD
 			int j = model.board.getPlayerNum(model.getPlayer(i));
 			switch (j){
 				case 0:
@@ -64,11 +109,15 @@ public class SquarePanel extends JPanel {
 					name.setForeground(Color.GREEN);
 					break;
 			}
+=======
+			name.setFont(font2);
+>>>>>>> 823064b4d0caa0559e6e7af513d35848b27e6afe
 			subPanel.add(name);
 		}
 		this.revalidate();
 		this.repaint();
 	}
+
 	
 	/**
 	 * This method is just for testing.
