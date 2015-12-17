@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -84,6 +83,7 @@ public class Game extends JFrame implements ActionListener {
 		totalPanel.setLayout(new BorderLayout());
 		board = new Board(playerNames);
 
+		//Asking user to input the number of each action square they would like to have on the board
 		SquareTypeNumberGUI window = new SquareTypeNumberGUI();
 		this.setVisible(false);
 		window.showDialog(null, "Number of each type of square");
@@ -118,6 +118,7 @@ public class Game extends JFrame implements ActionListener {
 		//Shuffle our board so the order is random
 		board.shuffle();
 		gbp = new GameBoardPanel(board);
+		//add bottom panel
 		makeCtrl = makeControl();
 		matching = matching();
 		totalPanel.add(gbp,BorderLayout.CENTER);
@@ -126,37 +127,48 @@ public class Game extends JFrame implements ActionListener {
 		this.add(totalPanel);
 		rand = new Random(); //used when rolling dice
 		
+		//play music in game background
 		music();
 	}
-
+	
+	/**
+	 * Add icons to the game in place of names
+	 * Player names with Icons legend at the top of the Game panel
+	 * @return
+	 */
 	private JPanel matching(){
 		top = new JPanel();
 		top.setLayout(new GridLayout(1,8));
 
+		//first player is a cat
 		Image Pic1 = null;
 		ImageIcon Icon1 = new ImageIcon("cat2.png");
 		Pic1 = Icon1.getImage();
 		Pic1 = Pic1.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		JLabel picLabel1 = new JLabel(new ImageIcon(Pic1));
 		
+		//second player is a duck
 		Image Pic2 = null;
 		ImageIcon Icon2 = new ImageIcon("duck.png");
 		Pic2 = Icon2.getImage();
 		Pic2 = Pic2.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		JLabel picLabel2 = new JLabel(new ImageIcon(Pic2));
 		
+		//third player is a sheep
 		Image Pic3 = null;
 		ImageIcon Icon3 = new ImageIcon("sheep.png");
 		Pic3 = Icon3.getImage();
 		Pic3 = Pic3.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		JLabel picLabel3 = new JLabel(new ImageIcon(Pic3));
 		
+		//fourth player is a watermelon
 		Image Pic4 = null;
 		ImageIcon Icon4 = new ImageIcon("watermelon.png");
 		Pic4 = Icon4.getImage();
 		Pic4 = Pic4.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
 		JLabel picLabel4 = new JLabel(new ImageIcon(Pic4));
 		
+		//Show players w/icons legend at top
 		if(0<playerNames.length){
 			player1 = new JLabel(playerNames[0]+": ");
 			top.add(player1);
@@ -196,8 +208,13 @@ public class Game extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * main method that plays the game
+	 * @param args
+	 */
 	public static void main(String [] args) {
 		
+		//Ask the user for number of players (2-4)
 		try{
 			String playerNum = JOptionPane.showInputDialog("Please enter the number of players(2-4): ");
 			if(playerNum == null)
@@ -211,6 +228,7 @@ public class Game extends JFrame implements ActionListener {
 		}
 
 		playerNames = new String[PLAYERNUM];
+		//Ask user to input names for each player
 		for(int i=0, num=1; i<PLAYERNUM; i++,num++){
 			String ans;
 			while(true){
@@ -231,16 +249,25 @@ public class Game extends JFrame implements ActionListener {
 			}
 			playerNames[i] = ans;
 		}
+		//Begin each player with a score of 0
 		for(int i = 0; i < PLAYERNUM; i++)
 		{
 			score.add(0);
 		}
 
+		//Begin the game
 		g = new Game();
 		g.setVisible(true);
 		
 	}
 
+	/**
+	 * boolean returns if a name is already taken by another player
+	 * @param playerNames2
+	 * @param i
+	 * @param ans
+	 * @return
+	 */
 	private static boolean isIn(String[] playerNames2, int i, String ans) 
 	{
 		for(int j=0; j<i; j++){
@@ -262,6 +289,7 @@ public class Game extends JFrame implements ActionListener {
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 
+			//Move player one tile at a time
 			for(int i=0; i<diceNumber; i++){
 				board.doMove(1);
 				gbp.update();
@@ -274,8 +302,12 @@ public class Game extends JFrame implements ActionListener {
 				    ex.printStackTrace();
 				}
 			}
+			//do action of that square it finally lands on
 			board.doAction();
 
+			//if player lands on finish, update scores and ask if they want to play again, printing out scores too
+			//if yes, restart game
+			//if no, close game
 			if(board.hitFinish()){
 				score.set(board.turnIndex(), score.get(board.turnIndex()) + 1);
 
@@ -330,16 +362,16 @@ public class Game extends JFrame implements ActionListener {
 	{       
 		AudioPlayer MGP = AudioPlayer.player;
 		AudioStream BGM;
-		AudioData MD;
-
+		//AudioData MD;
+		
 		ContinuousAudioDataStream loop = null;
 
+		//play a song! Frozen, for winter
 		try
 		{
 			InputStream test = new FileInputStream("Let It Go.wav");
 			BGM = new AudioStream(test);
 			AudioPlayer.player.start(BGM);
-
 		}
 		catch(FileNotFoundException e){
 			System.out.print(e.toString());

@@ -44,7 +44,7 @@ public class Board
 	}
 	
 	/**
-	 * returns turn index
+	 * returns turn index. Turn index changes to tell you which player is going
 	 * @return turn index
 	 */
 	public int turnIndex()
@@ -89,6 +89,7 @@ public class Board
 	 */
 	public void goBack()
 	{
+		//Find location of player first
 		//Check to see if have any savePoints saved, then move to last savePoint
 		//If no savePoints, move to start
 		for(int a=0; a<playerNames.length; a++){
@@ -109,6 +110,8 @@ public class Board
 						}
 					}
 				}
+				//remove player from square, then add them to las save point
+				//move back to start if no save points saved
 				board.get(location).removePlayer(player);
 				if(SavePoints.get(a).isEmpty())
 				{
@@ -195,6 +198,9 @@ public class Board
 		return result;
 	}
 
+	/**
+	 * doAction method that uses doAction method in Square
+	 */
 	public void doAction(){
 		for(int a=0; a<playerNames.length; a++)
 		{
@@ -225,6 +231,7 @@ public class Board
 	 */
 	public void doMove(int value)
 	{
+		//find location of player
 		for(int a=0; a<playerNames.length; a++)
 		{
 			int location = 0;
@@ -246,6 +253,9 @@ public class Board
 					}
 				}
 
+				//remove player from square and move them to new square
+				//if number of moves exceeds number of squares left on the board,
+				//just move player to finish square
 				board.get(location).removePlayer(player);
 				if((location+value) <= (board.size()-1))
 				{

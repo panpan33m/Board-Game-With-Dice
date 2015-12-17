@@ -41,6 +41,7 @@ public class SquarePanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		JPanel topPanel = new JPanel();
 
+		//Set toppanel font to Courier New for some font fun!
 		Font font = new Font("Courier New", Font.BOLD, 13);
 
 		JLabel newLabel = new JLabel(s.getLabel());
@@ -50,6 +51,7 @@ public class SquarePanel extends JPanel {
 
 		subPanel = new JPanel();
 
+		//Give colors to each special square
 		if(s.getLabel().equals("Start"))
 		{
 			topPanel.setBackground(Color.GREEN);
@@ -97,14 +99,15 @@ public class SquarePanel extends JPanel {
 		subPanel.removeAll();
 		//TODO: you will need to update all the player labels here so the
 		subPanel.setLayout(new FlowLayout());
+		
+		//Show icons for each player
 		for(int i=0; i<model.sizePlayer(); i++)
 		{
-			Font font2 = new Font("Garamond", Font.PLAIN, 17);
-
 			name = new JLabel(model.getPlayer(i));
 			int j = model.board.getPlayerNum(model.getPlayer(i));
 			switch (j){
 			case 0:
+				//player 1 is a cat
 				Image Pic1 = null;
 				ImageIcon Icon1 = new ImageIcon("cat2.png");
 				Pic1 = Icon1.getImage();
@@ -113,6 +116,7 @@ public class SquarePanel extends JPanel {
 				subPanel.add(picLabel1);
 				break;
 			case 1:
+				//player 2 is a duck
 				Image Pic2 = null;
 				ImageIcon Icon2 = new ImageIcon("duck.png");
 				Pic2 = Icon2.getImage();
@@ -121,6 +125,7 @@ public class SquarePanel extends JPanel {
 				subPanel.add(picLabel2);
 				break;
 			case 2:
+				//player 3 is a sheep
 				Image Pic3 = null;
 				ImageIcon Icon3 = new ImageIcon("sheep.png");
 				Pic3 = Icon3.getImage();
@@ -129,6 +134,7 @@ public class SquarePanel extends JPanel {
 				subPanel.add(picLabel3);
 				break;
 			case 3:
+				//player 4 is a watermelon
 				Image Pic4 = null;
 				ImageIcon Icon4 = new ImageIcon("watermelon.png");
 				Pic4 = Icon4.getImage();
