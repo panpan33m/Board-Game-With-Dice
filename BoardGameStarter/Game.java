@@ -334,14 +334,9 @@ public class Game extends JFrame implements ActionListener {
 		return s;
 	}
 	
-	
-	public void playMusic()
-	{
-		String path = "/Users/alinabpham/Downloads/Let It Go.wav";
-
-		
-	}
-	
+	/**
+	 * plays music in GUI
+	 */
 	public static void music() 
 	{       
 		AudioPlayer MGP = AudioPlayer.player;
@@ -350,9 +345,10 @@ public class Game extends JFrame implements ActionListener {
 
 		ContinuousAudioDataStream loop = null;
 
+		///Users/alinabpham/Documents/Board Game/BoardGameStarter/Let It Go.wav
 		try
 		{
-			InputStream test = new FileInputStream("/Users/alinabpham/Documents/Board Game/BoardGameStarter/Let It Go.wav");
+			InputStream test = new FileInputStream("Let It Go.wav");
 			BGM = new AudioStream(test);
 			AudioPlayer.player.start(BGM);
 
