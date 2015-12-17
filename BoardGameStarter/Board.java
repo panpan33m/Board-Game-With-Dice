@@ -152,7 +152,6 @@ public class Board
 	 * @param newSquare - the square being added
 	 */
 	public void addSquare(Square newSquare) {
-		//TODO: need to add the players if this is the first square
 		if(board.isEmpty())
 		{
 			for(int i=0; i<playerNames.length; i++){

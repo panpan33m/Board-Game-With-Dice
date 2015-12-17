@@ -17,6 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+/**
+ * This class shows the GUI to ask user to enter the number of squares
+ * @author Celine
+ *
+ */
 
 public class SquareTypeNumberGUI extends JPanel implements ActionListener {
 
@@ -61,6 +66,7 @@ public class SquareTypeNumberGUI extends JPanel implements ActionListener {
 		centerPanel.add(spNum);
 		this.add(centerPanel,BorderLayout.CENTER);
 
+		//add ok button at the bottom
 		southPanel = new JPanel();
 		southPanel.setLayout(new FlowLayout());
 		OK = new JButton("OK");
@@ -99,6 +105,8 @@ public class SquareTypeNumberGUI extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == OK){
+			//remember all the numbers
+			//make sure they are valid(not negative, not bigger than the number of total empty squares)
 			try{
 				raNumInt = Integer.parseInt(raNum.getText());				
 				gbNumInt = Integer.parseInt(gbNum.getText());				

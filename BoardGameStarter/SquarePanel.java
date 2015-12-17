@@ -97,7 +97,6 @@ public class SquarePanel extends JPanel {
 	 */
 	public void update() {
 		subPanel.removeAll();
-		//TODO: you will need to update all the player labels here so the
 		subPanel.setLayout(new FlowLayout());
 		
 		//Show icons for each player

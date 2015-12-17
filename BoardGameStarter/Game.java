@@ -40,10 +40,6 @@ public class Game extends JFrame implements ActionListener {
 
 	private JLabel turnLabel;
 
-	private JDialog dialog = null;
-
-	private JLabel match;
-
 	private JPanel top;
 
 	private JLabel player1;
@@ -79,8 +75,7 @@ public class Game extends JFrame implements ActionListener {
 		this.setSize(800,800);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Board Game");
-		totalPanel = new JPanel();
-		totalPanel.setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout());
 		board = new Board(playerNames);
 
 		//Asking user to input the number of each action square they would like to have on the board
@@ -89,7 +84,7 @@ public class Game extends JFrame implements ActionListener {
 		window.showDialog(null, "Number of each type of square");
 		this.setVisible(true);
 
-		//Add the squares to the board. Don't worry about order (except for start/end)
+		//Add the squares to the board according to the number entered by user
 		board.addSquare(new ActionSquare("Start"));
 
 		int count = 2;
@@ -121,14 +116,12 @@ public class Game extends JFrame implements ActionListener {
 		//add bottom panel
 		makeCtrl = makeControl();
 		matching = matching();
-		totalPanel.add(gbp,BorderLayout.CENTER);
-		totalPanel.add(makeCtrl,BorderLayout.SOUTH);
-		totalPanel.add(matching, BorderLayout.NORTH);
-		this.add(totalPanel);
+		this.add(gbp,BorderLayout.CENTER);
+		this.add(makeCtrl,BorderLayout.SOUTH);
+		this.add(matching, BorderLayout.NORTH);
 		rand = new Random(); //used when rolling dice
 		
 		//play music in game background
-		music();
 	}
 	
 	/**
@@ -256,6 +249,7 @@ public class Game extends JFrame implements ActionListener {
 		}
 
 		//Begin the game
+		music();
 		g = new Game();
 		g.setVisible(true);
 		
@@ -293,10 +287,10 @@ public class Game extends JFrame implements ActionListener {
 			for(int i=0; i<diceNumber; i++){
 				board.doMove(1);
 				gbp.update();
-				totalPanel.repaint();
-				totalPanel.update(totalPanel.getGraphics());
+				this.repaint();
+				this.update(this.getGraphics());
 				try {
-				    Thread.sleep(500);
+				    Thread.sleep(200);
 				} 
 				catch (InterruptedException ex) {
 				    ex.printStackTrace();
@@ -324,19 +318,18 @@ public class Game extends JFrame implements ActionListener {
 					System.exit(0);
 				}
 			}
-			totalPanel.remove(matching);
-			totalPanel.remove(makeCtrl);
-			totalPanel.remove(gbp);
+			this.remove(matching);
+			this.remove(makeCtrl);
+			this.remove(gbp);
 			gbp = new GameBoardPanel(board);
 			makeCtrl = makeControl();
 			matching = matching();
-			totalPanel.add(gbp,BorderLayout.CENTER);
-			totalPanel.add(makeCtrl,BorderLayout.SOUTH);
-			totalPanel.add(matching, BorderLayout.NORTH);
+			this.add(gbp,BorderLayout.CENTER);
+			this.add(makeCtrl,BorderLayout.SOUTH);
+			this.add(matching, BorderLayout.NORTH);
 			gbp.update();
-			totalPanel.revalidate();
-			totalPanel.update(totalPanel.getGraphics());
-			System.out.println("AFTER");
+			this.revalidate();
+			this.update(this.getGraphics());
 		}
 
 	}
