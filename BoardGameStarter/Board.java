@@ -17,26 +17,24 @@ public class Board
 {
 
 	public static final int BOARDSIZE = 9;
-	private int TURN_INDEX = 0;
-
-	private String[] playerNames;
-	private ArrayList<ArrayList<Square>> SavePoints = new ArrayList<ArrayList<Square>>();
-	private Square s;
-	private int n;
 	
-	private boolean R_AGAIN = false;
-
+	private int TURN_INDEX = 0;
+	
+	/**
+	 * ArrayList to keep track of save points for each player
+	 */
+	private ArrayList<ArrayList<Square>> SavePoints = new ArrayList<ArrayList<Square>>();
+	
 	/**
 	 * An array list of all the squares on our board
 	 */
 	private ArrayList<Square> board = new ArrayList<Square>();
 	
-	private static ArrayList<Square> emptySquares = new ArrayList<Square>();
 	/**
 	 * The people playing the game
 	 */
-	//public String player1 = playerNames[0];
-	//public String player2 = playerNames[1];
+	private String[] playerNames;
+	
 	/**
 	 * The person whose turn it is
 	 */
@@ -45,6 +43,10 @@ public class Board
 		return playerNames[TURN_INDEX];
 	}
 	
+	/**
+	 * returns turn index
+	 * @return turn index
+	 */
 	public int turnIndex()
 	{
 		return TURN_INDEX;
@@ -215,6 +217,7 @@ public class Board
 			}
 		}
 	}
+	
 	/**
 	 * Move the player to their new position based on the dice roll
 	 * @param value - the dice roll
@@ -252,6 +255,7 @@ public class Board
 				else
 				{
 					board.get(board.size()-1).addPlayer(playerNames[a]);
+					board.get(board.size()-1).doAction();
 				}
 				break;
 			}
@@ -322,44 +326,8 @@ public class Board
 
 	}
 	
-	public static ArrayList<Square> getEmptySquares()
-	{
-		return emptySquares;
-	}
 
 	
-	public boolean rollAgain()
-	{
-		boolean rAgain = false;
-		if(turn().equals(playerNames[0]))
-		{
-			int location = 0;
-
-			for(int i = 0; i < board.size(); i++)
-			{
-				if(board.get(i).sizePlayer() > 0)
-				{
-					for(int j = 0; j < board.get(i).sizePlayer(); j++)
-					{
-						if(board.get(i).getPlayer(j).equals(playerNames[0]))
-						{
-							location = i;
-						}
-					}
-				}
-			}
-			if(board.get(location).getLabel().equals("Roll Again"))
-			{
-				rAgain = true;
-			}
-			else if(!board.get(location).getLabel().equals("Roll Again"))
-			{
-				rAgain = false;
-			}
-		}
-		return rAgain;
-	}
-
 	/**
 	 * This main method is here for testing purposes only. The game is
 	 * run from Game.main. You can run this method to see how mapSquareToPosition works

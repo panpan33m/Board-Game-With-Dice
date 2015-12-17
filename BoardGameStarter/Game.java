@@ -61,8 +61,6 @@ public class Game extends JFrame implements ActionListener {
 	
 	private static int PLAYERNUM;
 	
-	private static boolean S_PLAY = false;
-
 	/**
 	 * ArrayList to keep track of scores
 	 */
@@ -123,22 +121,6 @@ public class Game extends JFrame implements ActionListener {
 		this.add(makeCtrl,BorderLayout.SOUTH);
 		this.add(matching, BorderLayout.NORTH);
 		rand = new Random(); //used when rolling dice
-		
-		if(singlePlay() == true)
-		{
-			if(board.turn().equals(playerNames[0]))
-			{
-				roll.doClick();
-				if(board.rollAgain())
-				{
-					while(board.rollAgain())
-					{
-						JOptionPane.showMessageDialog(null, "Computer will roll again!");
-						roll.doClick();
-					}
-				}
-			}
-		}
 		
 		//playMusic();
 	}
@@ -211,87 +193,49 @@ public class Game extends JFrame implements ActionListener {
 	}
 
 	public static void main(String [] args) {
-
-		Object[] options = { "Single Player", "Multiplayer" };
-		int whichPlay = JOptionPane.showOptionDialog(null, "Would you like to play:", "WELCOME TO OUR BOARD GAME",
-				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-				null, options, options[0]);
 		
-		if(whichPlay == 1)
-		{
-			try{
-				String playerNum = JOptionPane.showInputDialog("Please enter the number of players(2-4): ");
-				if(playerNum == null)
-					System.exit(0);
-				PLAYERNUM = Integer.parseInt(playerNum);
-				if(PLAYERNUM<2 || PLAYERNUM>4)
-					throw new Exception();
-				//break;
-			}
-			catch(Exception e){
-				JOptionPane.showMessageDialog(null, "Please enter a number between 2 and 4.");
-			}
-
-			playerNames = new String[PLAYERNUM];
-			for(int i=0, num=1; i<PLAYERNUM; i++,num++){
-				String ans;
-				while(true){
-					ans = JOptionPane.showInputDialog(null, "Please enter the user name for player "+num);
-					if(ans == null){
-						System.exit(0);
-					}
-					else if(ans.equals(""))
-					{
-						JOptionPane.showMessageDialog(null, "Please enter a valid name");
-						continue;
-					}
-					else if(isIn(playerNames,i,ans)){
-						JOptionPane.showMessageDialog(null, "Name already taken!");
-						continue;
-					}
-					break;
-				}
-				playerNames[i] = ans;
-			}
-			for(int i = 0; i < PLAYERNUM; i++)
-			{
-				score.add(0);
-			}
+		try{
+			String playerNum = JOptionPane.showInputDialog("Please enter the number of players(2-4): ");
+			if(playerNum == null)
+				System.exit(0);
+			PLAYERNUM = Integer.parseInt(playerNum);
+			if(PLAYERNUM<2 || PLAYERNUM>4)
+				throw new Exception();
+			//break;
 		}
-		else
-		{
-			S_PLAY = true;
-			
-			playerNames = new String[2];
-			
-			playerNames[0] = "Computer";
-			
-			String one;
+		catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Please enter a number between 2 and 4.");
+		}
+
+		playerNames = new String[PLAYERNUM];
+		for(int i=0, num=1; i<PLAYERNUM; i++,num++){
+			String ans;
 			while(true){
-				one = JOptionPane.showInputDialog(null, "Please enter your user name");
-				if(one == null){
+				ans = JOptionPane.showInputDialog(null, "Please enter the user name for player "+num);
+				if(ans == null){
 					System.exit(0);
 				}
-				else if(one.equals(""))
+				else if(ans.equals(""))
 				{
 					JOptionPane.showMessageDialog(null, "Please enter a valid name");
 					continue;
 				}
+				else if(isIn(playerNames,i,ans)){
+					JOptionPane.showMessageDialog(null, "Name already taken!");
+					continue;
+				}
 				break;
 			}
-			playerNames[1] = one;
-			
-			for(int i = 0; i < 2; i++)
-			{
-				score.add(0);
-			}
-
+			playerNames[i] = ans;
 		}
-		
+		for(int i = 0; i < PLAYERNUM; i++)
+		{
+			score.add(0);
+		}
+
+
 		g = new Game();
 		g.setVisible(true);
-		
-		
 		
 	}
 
@@ -388,11 +332,6 @@ public class Game extends JFrame implements ActionListener {
 		return s;
 	}
 	
-	
-	public static boolean singlePlay()
-	{
-		return S_PLAY;
-	}
 	
 	public void playMusic()
 	{

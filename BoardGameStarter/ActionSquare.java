@@ -17,10 +17,8 @@ public class ActionSquare extends Square{
 	public void doAction() {
 		if(label.equals("Roll Again"))
 		{
-			if(board.rollAgain() == false)
-			{
-				JOptionPane.showMessageDialog(null, "It's your turn to roll again!");
-			}
+			JOptionPane.showMessageDialog(null, "It's your turn to roll again!");
+
 		}
 		else if(label.equals("Go Back")){
 			board.goBack();
