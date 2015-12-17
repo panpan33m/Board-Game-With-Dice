@@ -244,7 +244,7 @@ public class Game extends JFrame implements ActionListener {
 			for(int i=0; i<diceNumber; i++){
 				board.doMove(1);
 				try {
-				    Thread.sleep(500);
+				    Thread.sleep(200);
 				} 
 				catch (InterruptedException ex) {
 				    ex.printStackTrace();
