@@ -88,7 +88,6 @@ public class SquareTypeNumberGUI extends JPanel implements ActionListener {
 			dialog = new JDialog(owner, true);
 			dialog.add(this);
 			dialog.setLocationRelativeTo(null);
-			//	dialog.getRootPane().setDefaultButton(cancelButton);
 			dialog.pack();
 		}
 		//set the title and show it

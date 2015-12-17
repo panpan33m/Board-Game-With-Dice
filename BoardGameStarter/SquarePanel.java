@@ -137,7 +137,6 @@ public class SquarePanel extends JPanel {
 				subPanel.add(picLabel4);
 				break;
 			}
-			//subPanel.add(name);
 		}
 		this.revalidate();
 		this.repaint();

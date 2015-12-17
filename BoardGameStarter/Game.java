@@ -83,7 +83,6 @@ public class Game extends JFrame implements ActionListener {
 		board = new Board(playerNames);
 
 		SquareTypeNumberGUI window = new SquareTypeNumberGUI();
-		//window.setLocation(this.getLocation());
 		this.setVisible(false);
 		window.showDialog(null, "Number of each type of square");
 		this.setVisible(true);
@@ -203,7 +202,6 @@ public class Game extends JFrame implements ActionListener {
 			PLAYERNUM = Integer.parseInt(playerNum);
 			if(PLAYERNUM<2 || PLAYERNUM>4)
 				throw new Exception();
-			//break;
 		}
 		catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Please enter a number between 2 and 4.");
@@ -261,8 +259,6 @@ public class Game extends JFrame implements ActionListener {
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 
-			//board.doMove(diceNumber);
-
 			for(int i=0; i<diceNumber; i++){
 				board.doMove(1);
 				try {
@@ -316,8 +312,7 @@ public class Game extends JFrame implements ActionListener {
 			this.revalidate();
 			this.update(this.getGraphics());
 		}
-		//take care of moving the player around and updating the board!
-		//this.update(this.getGraphics());
+
 	}
 
 	/**
@@ -345,7 +340,6 @@ public class Game extends JFrame implements ActionListener {
 
 		ContinuousAudioDataStream loop = null;
 
-		///Users/alinabpham/Documents/Board Game/BoardGameStarter/Let It Go.wav
 		try
 		{
 			InputStream test = new FileInputStream("Let It Go.wav");

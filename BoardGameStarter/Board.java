@@ -250,12 +250,10 @@ public class Board
 				if((location+value) <= (board.size()-1))
 				{
 					board.get(location+value).addPlayer(playerNames[a]);
-					//board.get(location+value).doAction();
 				}
 				else
 				{
 					board.get(board.size()-1).addPlayer(playerNames[a]);
-					//board.get(board.size()-1).doAction();
 				}
 				break;
 			}
