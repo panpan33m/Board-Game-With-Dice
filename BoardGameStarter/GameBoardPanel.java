@@ -36,7 +36,6 @@ public class GameBoardPanel extends JPanel {
 				else 
 				{
 					this.add(new JPanel());
-					this.setBackground(Color.BLUE);
 				}
 			}
 		}
