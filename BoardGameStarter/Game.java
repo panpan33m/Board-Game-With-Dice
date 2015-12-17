@@ -18,8 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import sun.audio.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.io.*;
 
 /**
  * Main frame for the Board Game.
@@ -122,7 +124,7 @@ public class Game extends JFrame implements ActionListener {
 		this.add(matching, BorderLayout.NORTH);
 		rand = new Random(); //used when rolling dice
 		
-		//playMusic();
+		music();
 	}
 
 	private JPanel matching(){
@@ -335,12 +337,34 @@ public class Game extends JFrame implements ActionListener {
 	
 	public void playMusic()
 	{
-		String path = "/Users/alinabpham/Music/iTunes/iTunes Media/Music/Compilations/"
-				+ "Frozen (Original Motion Picture Soundtrack)/Let_It_Go.mp3";
-	    Media song = new Media(new File(path).toURI().toString());
+		String path = "/Users/alinabpham/Downloads/Let It Go.wav";
 
-		MediaPlayer mediaPlayer = new MediaPlayer(song);
-		mediaPlayer.play();
+		
+	}
+	
+	public static void music() 
+	{       
+		AudioPlayer MGP = AudioPlayer.player;
+		AudioStream BGM;
+		AudioData MD;
+
+		ContinuousAudioDataStream loop = null;
+
+		try
+		{
+			InputStream test = new FileInputStream("/Users/alinabpham/Documents/Board Game/BoardGameStarter/Let It Go.wav");
+			BGM = new AudioStream(test);
+			AudioPlayer.player.start(BGM);
+
+		}
+		catch(FileNotFoundException e){
+			System.out.print(e.toString());
+		}
+		catch(IOException error)
+		{
+			System.out.print(error.toString());
+		}
+		MGP.start(loop);
 	}
 
 }
