@@ -59,6 +59,8 @@ public class Game extends JFrame implements ActionListener {
 
 	private JPanel matching;
 
+	private JPanel totalPanel;
+
 	private static String[] playerNames;
 	
 	private static int PLAYERNUM;
@@ -78,8 +80,8 @@ public class Game extends JFrame implements ActionListener {
 		this.setSize(800,800);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Board Game");
-		this.setLayout(new BorderLayout());
-
+		totalPanel = new JPanel();
+		totalPanel.setLayout(new BorderLayout());
 		board = new Board(playerNames);
 
 		SquareTypeNumberGUI window = new SquareTypeNumberGUI();
@@ -118,9 +120,10 @@ public class Game extends JFrame implements ActionListener {
 		gbp = new GameBoardPanel(board);
 		makeCtrl = makeControl();
 		matching = matching();
-		this.add(gbp,BorderLayout.CENTER);
-		this.add(makeCtrl,BorderLayout.SOUTH);
-		this.add(matching, BorderLayout.NORTH);
+		totalPanel.add(gbp,BorderLayout.CENTER);
+		totalPanel.add(makeCtrl,BorderLayout.SOUTH);
+		totalPanel.add(matching, BorderLayout.NORTH);
+		this.add(totalPanel);
 		rand = new Random(); //used when rolling dice
 		
 		music();
@@ -261,27 +264,17 @@ public class Game extends JFrame implements ActionListener {
 
 			for(int i=0; i<diceNumber; i++){
 				board.doMove(1);
+				gbp.update();
+				totalPanel.repaint();
+				totalPanel.update(totalPanel.getGraphics());
 				try {
-				    Thread.sleep(200);
+				    Thread.sleep(500);
 				} 
 				catch (InterruptedException ex) {
 				    ex.printStackTrace();
 				}
-				this.remove(matching);
-				this.remove(makeCtrl);
-				this.remove(gbp);
-				gbp = new GameBoardPanel(board);
-				makeCtrl = makeControl();
-				matching = matching();
-				this.add(gbp,BorderLayout.CENTER);
-				this.add(makeCtrl,BorderLayout.SOUTH);
-				this.add(matching, BorderLayout.NORTH);
-				gbp.update();
-				this.revalidate();
-				this.update(this.getGraphics());
 			}
 			board.doAction();
-
 
 			if(board.hitFinish()){
 				score.set(board.turnIndex(), score.get(board.turnIndex()) + 1);
@@ -299,18 +292,19 @@ public class Game extends JFrame implements ActionListener {
 					System.exit(0);
 				}
 			}
-			this.remove(matching);
-			this.remove(makeCtrl);
-			this.remove(gbp);
+			totalPanel.remove(matching);
+			totalPanel.remove(makeCtrl);
+			totalPanel.remove(gbp);
 			gbp = new GameBoardPanel(board);
 			makeCtrl = makeControl();
 			matching = matching();
-			this.add(gbp,BorderLayout.CENTER);
-			this.add(makeCtrl,BorderLayout.SOUTH);
-			this.add(matching, BorderLayout.NORTH);
+			totalPanel.add(gbp,BorderLayout.CENTER);
+			totalPanel.add(makeCtrl,BorderLayout.SOUTH);
+			totalPanel.add(matching, BorderLayout.NORTH);
 			gbp.update();
-			this.revalidate();
-			this.update(this.getGraphics());
+			totalPanel.revalidate();
+			totalPanel.update(totalPanel.getGraphics());
+			System.out.println("AFTER");
 		}
 
 	}
