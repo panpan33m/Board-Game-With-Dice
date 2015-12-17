@@ -1,35 +1,40 @@
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  * This class defines your game board
- * @author jburge
+ * @author jburge, apham, ctao
  *
  */
 public class Board
 {
 
 	public static final int BOARDSIZE = 9;
+	
 	private int TURN_INDEX = 0;
-
-	private String[] playerNames;
+	
+	/**
+	 * ArrayList to keep track of save points for each player
+	 */
 	private ArrayList<ArrayList<Square>> SavePoints = new ArrayList<ArrayList<Square>>();
-	private Square s;
-	private int n;
-
+	
 	/**
 	 * An array list of all the squares on our board
 	 */
 	private ArrayList<Square> board = new ArrayList<Square>();
+	
 	/**
 	 * The people playing the game
 	 */
-	//public String player1 = playerNames[0];
-	//public String player2 = playerNames[1];
+	private String[] playerNames;
+	
 	/**
 	 * The person whose turn it is
 	 */
@@ -38,6 +43,10 @@ public class Board
 		return playerNames[TURN_INDEX];
 	}
 	
+	/**
+	 * returns turn index
+	 * @return turn index
+	 */
 	public int turnIndex()
 	{
 		return TURN_INDEX;
@@ -120,6 +129,11 @@ public class Board
 		}	
 	}
 
+	/**
+	 * return the player number
+	 * @param name
+	 * @return
+	 */
 	public int getPlayerNum(String name){
 		for(int i=0; i<playerNames.length;i++)
 		{
@@ -182,7 +196,8 @@ public class Board
 	}
 
 	public void doAction(){
-		for(int a=0; a<playerNames.length; a++){
+		for(int a=0; a<playerNames.length; a++)
+		{
 
 			if(turn().equals(playerNames[a]))
 			{
@@ -203,14 +218,15 @@ public class Board
 			}
 		}
 	}
+	
 	/**
 	 * Move the player to their new position based on the dice roll
 	 * @param value - the dice roll
 	 */
 	public void doMove(int value)
 	{
-		for(int a=0; a<playerNames.length; a++){
-
+		for(int a=0; a<playerNames.length; a++)
+		{
 			int location = 0;
 			int player = 0;
 			if(turn().equals(playerNames[a]))
@@ -221,7 +237,7 @@ public class Board
 					{
 						for(int j = 0; j < board.get(i).sizePlayer(); j++)
 						{
-							if(board.get(i).getPlayer(j).equals(playerNames[a]))
+							if(board.get(i).getPlayer(j).contains(playerNames[a]))
 							{
 								location = i;
 								player = j;
@@ -234,10 +250,12 @@ public class Board
 				if((location+value) <= (board.size()-1))
 				{
 					board.get(location+value).addPlayer(playerNames[a]);
+					//board.get(location+value).doAction();
 				}
 				else
 				{
 					board.get(board.size()-1).addPlayer(playerNames[a]);
+					//board.get(board.size()-1).doAction();
 				}
 				break;
 			}
@@ -307,8 +325,9 @@ public class Board
 		return -1;
 
 	}
+	
 
-
+	
 	/**
 	 * This main method is here for testing purposes only. The game is
 	 * run from Game.main. You can run this method to see how mapSquareToPosition works

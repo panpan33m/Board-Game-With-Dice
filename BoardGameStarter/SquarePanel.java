@@ -137,7 +137,6 @@ public class SquarePanel extends JPanel {
 				subPanel.add(picLabel4);
 				break;
 			}
-			name.setFont(font2);
 			//subPanel.add(name);
 		}
 		this.revalidate();
