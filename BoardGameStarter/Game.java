@@ -233,13 +233,13 @@ public class Game extends JFrame implements ActionListener {
 			score.add(0);
 		}
 
-
 		g = new Game();
 		g.setVisible(true);
 		
 	}
 
-	private static boolean isIn(String[] playerNames2, int i, String ans) {
+	private static boolean isIn(String[] playerNames2, int i, String ans) 
+	{
 		for(int j=0; j<i; j++){
 			if(playerNames2[j].equals(ans))
 				return true;
@@ -259,7 +259,7 @@ public class Game extends JFrame implements ActionListener {
 			int diceNumber = rand.nextInt(6)+1;
 			JOptionPane.showMessageDialog(this, board.turn() + " rolled "+diceNumber);
 
-			board.doMove(diceNumber);
+			//board.doMove(diceNumber);
 
 			for(int i=0; i<diceNumber; i++){
 				board.doMove(1);

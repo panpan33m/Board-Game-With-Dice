@@ -196,7 +196,8 @@ public class Board
 	}
 
 	public void doAction(){
-		for(int a=0; a<playerNames.length; a++){
+		for(int a=0; a<playerNames.length; a++)
+		{
 
 			if(turn().equals(playerNames[a]))
 			{
@@ -224,8 +225,8 @@ public class Board
 	 */
 	public void doMove(int value)
 	{
-		for(int a=0; a<playerNames.length; a++){
-
+		for(int a=0; a<playerNames.length; a++)
+		{
 			int location = 0;
 			int player = 0;
 			if(turn().equals(playerNames[a]))
@@ -236,7 +237,7 @@ public class Board
 					{
 						for(int j = 0; j < board.get(i).sizePlayer(); j++)
 						{
-							if(board.get(i).getPlayer(j).equals(playerNames[a]))
+							if(board.get(i).getPlayer(j).contains(playerNames[a]))
 							{
 								location = i;
 								player = j;
@@ -249,13 +250,12 @@ public class Board
 				if((location+value) <= (board.size()-1))
 				{
 					board.get(location+value).addPlayer(playerNames[a]);
-					board.get(location+value).doAction();
-
+					//board.get(location+value).doAction();
 				}
 				else
 				{
 					board.get(board.size()-1).addPlayer(playerNames[a]);
-					board.get(board.size()-1).doAction();
+					//board.get(board.size()-1).doAction();
 				}
 				break;
 			}
